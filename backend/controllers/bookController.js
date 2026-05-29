@@ -31,7 +31,8 @@ const getBooks = asyncHandler(async (req, res) => {
         };
     }
 
-    const books = await Book.find(query);
+    const books = await Book.find(query)
+    .populate("createdBy");
 
     res.status(200).json(books);
 });

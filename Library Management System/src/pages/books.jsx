@@ -12,7 +12,7 @@ const Books = () => {
             try {
 
                 const response = await axios.get(
-                    "/api/books"
+                    "http://localhost:5001/api/books"
                 );
 
                 setBooks(response.data);
@@ -27,28 +27,72 @@ const Books = () => {
 
     }, []);
 
+
+    const handleBorrow = async (id) => {
+
+    try {
+
+        const token = localStorage.getItem("token");
+
+        const response = await axios.post(
+            `http://localhost:5001/api/books/borrow/${id}`,
+            {},
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        alert(response.data.message);
+
+    } catch (error) {
+
+        console.log(error);
+
+        alert("Borrow failed");
+    }
+};
     return (
 
-        <div>
+    <div>
 
-            <h1>All Books</h1>
+        <h1>Library Books</h1>
 
-            {books.map((book) => (
+        {books.map((book) => (
 
-                <div key={book._id}>
+            <div
+                key={book._id}
+                style={{
+                    border: "1px solid gray",
+                    padding: "10px",
+                    margin: "10px",
+                    borderRadius: "10px"
+                }}
+            >
 
-                    <h2>{book.title}</h2>
+                <h2>{book.title}</h2>
 
-                    <p>{book.author}</p>
+                <p>Author: {book.author}</p>
 
-                    <p>{book.genre}</p>
+                <p>Genre: {book.genre}</p>
 
-                </div>
+                <p>
+                    Available Copies:
+                    {book.availableCopies}
+                </p>
+                <button
+    onClick={() => handleBorrow(book._id)}
+>
+    Borrow
+</button>
 
-            ))}
+            </div>
 
-        </div>
-    );
+        ))}
+
+    </div>
+);
 };
 
 export default Books;

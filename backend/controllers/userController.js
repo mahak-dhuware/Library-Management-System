@@ -83,8 +83,12 @@ const loginUser = asyncHandler(async (req, res) => {
         );
 
         res.status(200).json({
-            accessToken
-        });
+    accessToken,
+    user: {
+        id: user.id,
+        role: user.role
+    }
+});
 
     } else {
 
