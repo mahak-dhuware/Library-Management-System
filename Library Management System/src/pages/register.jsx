@@ -1,13 +1,27 @@
 import { useState } from "react";
+
 import axios from "axios";
+
+import { Link, useNavigate } from "react-router-dom";
+
+import InputField from "../components/InputField";
+
+import PrimaryButton from "../components/PrimaryButton";
+
+import { colors } from "../styles/theme";
 
 const Register = () => {
 
-    const [name, setName] = useState("");
+    const [name, setName] =
+        useState("");
 
-    const [email, setEmail] = useState("");
+    const [email, setEmail] =
+        useState("");
 
-    const [password, setPassword] = useState("");
+    const [password, setPassword] =
+        useState("");
+
+    const navigate = useNavigate();
 
     const handleRegister = async (e) => {
 
@@ -15,7 +29,7 @@ const Register = () => {
 
         try {
 
-            const response = await axios.post(
+            await axios.post(
                 "http://localhost:5001/api/users/register",
                 {
                     name,
@@ -24,67 +38,209 @@ const Register = () => {
                 }
             );
 
-            console.log(response.data);
+            alert(
+                "Registration Successful"
+            );
 
-            alert("Registration Successful");
+            navigate("/login");
 
         } catch (error) {
 
             console.log(error);
 
-            alert("Registration Failed");
+            alert(
+                "Registration Failed"
+            );
         }
     };
 
     return (
 
-        <div>
+        <div
+            style={{
+                minHeight: "100vh",
 
-            <h1>Register</h1>
+                backgroundColor:
+                    colors.background,
 
-            <form onSubmit={handleRegister}>
+                display: "flex",
 
-                <input
-                    type="text"
-                    placeholder="Enter name"
-                    value={name}
-                    onChange={(e) =>
-                        setName(e.target.value)
+                justifyContent:
+                    "center",
+
+                alignItems:
+                    "center",
+
+                padding: "20px"
+            }}
+        >
+
+            <div
+                style={{
+                    width: "100%",
+
+                    maxWidth: "430px",
+
+                    backgroundColor:
+                        colors.white,
+
+                    border:
+                        `1px solid ${colors.secondary}`,
+
+                    borderRadius:
+                        "24px",
+
+                    padding: "40px",
+
+                    boxShadow:
+                        "0 10px 30px rgba(15,118,110,0.08)"
+                }}
+            >
+
+                <div
+                    style={{
+                        textAlign: "center",
+
+                        marginBottom: "35px"
+                    }}
+                >
+
+                    <div
+                        style={{
+                            fontSize: "52px",
+
+                            marginBottom:
+                                "12px"
+                        }}
+                    >
+                        📚
+                    </div>
+
+                    <h1
+                        style={{
+                            color:
+                                colors.primary,
+
+                            fontSize:
+                                "34px",
+
+                            marginBottom:
+                                "10px"
+                        }}
+                    >
+                        Create Account
+                    </h1>
+
+                    <p
+                        style={{
+                            color:
+                                colors.textLight,
+
+                            fontSize:
+                                "15px"
+                        }}
+                    >
+                        Join the library
+                        management system
+                    </p>
+
+                </div>
+
+                <form
+                    onSubmit={
+                        handleRegister
                     }
-                />
+                    style={{
+                        display: "flex",
 
-                <br />
-                <br />
+                        flexDirection:
+                            "column",
 
-                <input
-                    type="email"
-                    placeholder="Enter email"
-                    value={email}
-                    onChange={(e) =>
-                        setEmail(e.target.value)
-                    }
-                />
+                        gap: "18px"
+                    }}
+                >
 
-                <br />
-                <br />
+                    <InputField
+                        type="text"
 
-                <input
-                    type="password"
-                    placeholder="Enter password"
-                    value={password}
-                    onChange={(e) =>
-                        setPassword(e.target.value)
-                    }
-                />
+                        placeholder="Enter name"
 
-                <br />
-                <br />
+                        value={name}
 
-                <button type="submit">
-                    Register
-                </button>
+                        onChange={(e) =>
+                            setName(
+                                e.target.value
+                            )
+                        }
+                    />
 
-            </form>
+                    <InputField
+                        type="email"
+
+                        placeholder="Enter email"
+
+                        value={email}
+
+                        onChange={(e) =>
+                            setEmail(
+                                e.target.value
+                            )
+                        }
+                    />
+
+                    <InputField
+                        type="password"
+
+                        placeholder="Enter password"
+
+                        value={password}
+
+                        onChange={(e) =>
+                            setPassword(
+                                e.target.value
+                            )
+                        }
+                    />
+
+                    <PrimaryButton
+                        text="Register"
+
+                        type="submit"
+                    />
+
+                </form>
+
+                <p
+                    style={{
+                        marginTop: "24px",
+
+                        textAlign: "center",
+
+                        color:
+                            colors.textLight
+                    }}
+                >
+                    Already have an
+                    account?{" "}
+
+                    <Link
+                        to="/login"
+                        style={{
+                            color:
+                                colors.primary,
+
+                            textDecoration:
+                                "none",
+
+                            fontWeight:
+                                "600"
+                        }}
+                    >
+                        Login
+                    </Link>
+                </p>
+
+            </div>
 
         </div>
     );

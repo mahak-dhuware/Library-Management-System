@@ -1,98 +1,202 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+
+import { Navigate } from "react-router-dom";
+
+import BookCard from "../components/BookCard";
+
+import PageHeader from "../components/PageHeader";
+
+import PageContainer from "../components/PageContainer";
+
+import {
+    getBooks,
+    borrowBook
+} from "../api/bookApi";
 
 const Books = () => {
 
-    const [books, setBooks] = useState([]);
+    const [books, setBooks] =
+        useState([]);
+
+    const [search, setSearch] =
+        useState("");
+
+    const token =
+        localStorage.getItem("token");
 
     useEffect(() => {
 
-        const fetchBooks = async () => {
+        const fetchBooks =
+            async () => {
 
-            try {
+                try {
 
-                const response = await axios.get(
-                    "http://localhost:5001/api/books"
-                );
+                    const data =
+                        await getBooks();
 
-                setBooks(response.data);
+                    setBooks(data);
 
-            } catch (error) {
+                } catch (error) {
 
-                console.log(error);
-            }
-        };
+                    console.log(error);
+                }
+            };
 
         fetchBooks();
 
     }, []);
 
+    const handleBorrow =
+        async (id) => {
 
-    const handleBorrow = async (id) => {
+            try {
 
-    try {
+                const response =
+                    await borrowBook(id);
 
-        const token = localStorage.getItem("token");
+                alert(
+                    response.message
+                );
 
-        const response = await axios.post(
-            `http://localhost:5001/api/books/borrow/${id}`,
-            {},
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
+                setBooks(
+                    books.map(
+                        (book) =>
+
+                            book._id === id
+                                ? {
+                                      ...book,
+
+                                      availableCopies:
+                                          book.availableCopies -
+                                          1
+                                  }
+                                : book
+                    )
+                );
+
+            } catch (error) {
+
+                console.log(error);
+
+                alert(
+                    "Borrow failed"
+                );
             }
+        };
+
+    const filteredBooks =
+        books.filter((book) =>
+
+            book.title
+                .toLowerCase()
+                .includes(
+                    search.toLowerCase()
+                ) ||
+
+            book.author
+                .toLowerCase()
+                .includes(
+                    search.toLowerCase()
+                ) ||
+
+            book.genre
+                .toLowerCase()
+                .includes(
+                    search.toLowerCase()
+                )
         );
 
-        alert(response.data.message);
+    if (!token) {
 
-    } catch (error) {
-
-        console.log(error);
-
-        alert("Borrow failed");
+        return (
+            <Navigate to="/login" />
+        );
     }
-};
+
     return (
 
-    <div>
+        <PageContainer>
 
-        <h1>Library Books</h1>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "12px", marginBottom: "24px" }}>
+                <PageHeader
+                    title="Library Collection"
+                    subtitle="Browse and borrow books from the digital library."
+                />
 
-        {books.map((book) => (
+                <div style={{ width: "100%", maxWidth: "760px" }}>
+                    <input
+                        type="text"
+                        placeholder="Search by title, author or genre..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        style={{
+                            width: "100%",
+                            padding: "14px 18px",
+                            borderRadius: "14px",
+                            border: "1px solid #E2E8F0",
+                            outline: "none",
+                            fontSize: "15px",
+                            backgroundColor: "#FFFFFF",
+                            boxShadow: "0 2px 10px rgba(2,6,23,0.06)"
+                        }}
+                    />
+                </div>
+            </div>
+
+            {/* BOOKS */}
 
             <div
-                key={book._id}
                 style={{
-                    border: "1px solid gray",
-                    padding: "10px",
-                    margin: "10px",
-                    borderRadius: "10px"
+                    display: "grid",
+
+                    gridTemplateColumns:
+                        "repeat(auto-fill, minmax(320px, 320px))",
+
+                    gap: "28px",
+
+                    justifyContent:
+                        "start"
                 }}
             >
 
-                <h2>{book.title}</h2>
+                {filteredBooks.map(
+                    (book) => (
 
-                <p>Author: {book.author}</p>
+                        <BookCard
+                            key={
+                                book._id
+                            }
 
-                <p>Genre: {book.genre}</p>
+                            book={book}
 
-                <p>
-                    Available Copies:
-                    {book.availableCopies}
-                </p>
-                <button
-    onClick={() => handleBorrow(book._id)}
->
-    Borrow
-</button>
+                            buttonText={
+                                book.availableCopies > 0
+                                    ? "Borrow Book"
+                                    : "Unavailable"
+                            }
+
+                            buttonColor={
+                                book.availableCopies > 0
+                                    ? "#0F766E"
+                                    : "#94A3B8"
+                            }
+
+                            showButton={
+                                true
+                            }
+
+                            onClick={
+                                handleBorrow
+                            }
+                        />
+
+                    )
+                )}
 
             </div>
 
-        ))}
-
-    </div>
-);
+        </PageContainer>
+    );
 };
 
 export default Books;

@@ -1,7 +1,8 @@
 import {
     BrowserRouter,
     Routes,
-    Route
+    Route,
+    useLocation
 } from "react-router-dom";
 
 import Books from "./pages/Books";
@@ -9,13 +10,25 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import MyBooks from "./pages/MyBooks";
 import AdminDashboard from "./pages/AdminDashboard";
+
 import Navbar from "./components/Navbar";
-function App() {
+
+function AppContent() {
+
+    const location = useLocation();
+
+    const hideNavbarRoutes = [
+        "/login",
+        "/register"
+    ];
 
     return (
 
-        <BrowserRouter>
-            <Navbar />
+        <>
+
+            {!hideNavbarRoutes.includes(
+                location.pathname
+            ) && <Navbar />}
 
             <Routes>
 
@@ -46,7 +59,21 @@ function App() {
 
             </Routes>
 
+        </>
+
+    );
+}
+
+function App() {
+
+    return (
+
+        <BrowserRouter>
+
+            <AppContent />
+
         </BrowserRouter>
+
     );
 }
 
