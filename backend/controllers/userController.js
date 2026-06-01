@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Book = require("../models/bookModel");
 const User = require("../models/userModel");
+const Borrow = require("../models/borrowModel");
 
 //@desc Register user
 //@route POST /api/users/register
@@ -106,11 +107,19 @@ const currentUser = asyncHandler(async (req, res) => {
 
 const myBooks = asyncHandler(async (req, res) => {
 
-    const books = await Book.find({
-        borrowedBy: req.user.id
-    });
+    const borrowedBooks =
+        await Borrow.find({
 
-    res.status(200).json(books);
+            user: req.user.id,
+
+            returned: false
+
+        })
+        .populate("book");
+
+    res.status(200).json(
+        borrowedBooks
+    );
+
 });
-
 module.exports = {registerUser, loginUser, currentUser, myBooks};

@@ -24,7 +24,10 @@ const BookCard = ({
 
                 padding: "24px",
 
-                minHeight: "320px",
+                minHeight: "340px",
+borderRadius: "20px",
+boxShadow:
+    "0 4px 12px rgba(15,118,110,0.08)",
 
                 display: "flex",
 
@@ -112,6 +115,47 @@ const BookCard = ({
                     </strong>{" "}
                     {book.genre}
                 </p>
+                {book.borrowDate && (
+
+    <p
+        style={{
+            color: colors.textLight,
+            marginBottom: "10px"
+        }}
+    >
+        <strong>
+            Borrowed:
+        </strong>{" "}
+        {new Date(
+            book.borrowDate
+        ).toLocaleDateString()}
+    </p>
+
+)}
+
+{book.dueDate && (
+
+    <p
+        style={{
+            color:
+                new Date(book.dueDate) < new Date()
+                    ? colors.danger
+                    : colors.primary,
+
+            fontWeight: "600",
+
+            marginBottom: "10px"
+        }}
+    >
+        <strong>
+            Due:
+        </strong>{" "}
+        {new Date(
+            book.dueDate
+        ).toLocaleDateString()}
+    </p>
+
+)}
                 {showCopies && (
 
         <p

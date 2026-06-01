@@ -62,24 +62,19 @@ const MyBooks = () => {
   }, []);
 
   const filteredBooks =
-    books.filter((book) =>
-      book.title
-        .toLowerCase()
-        .includes(
-          search.toLowerCase()
-        ) ||
-      book.author
-        .toLowerCase()
-        .includes(
-          search.toLowerCase()
-        ) ||
-      book.genre
-        .toLowerCase()
-        .includes(
-          search.toLowerCase()
-        )
-    );
+    books.filter((borrow) =>
+        borrow.book?.title
+            ?.toLowerCase()
+            .includes(search.toLowerCase()) ||
 
+        borrow.book?.author
+            ?.toLowerCase()
+            .includes(search.toLowerCase()) ||
+
+        borrow.book?.genre
+            ?.toLowerCase()
+            .includes(search.toLowerCase())
+    );
   const handleReturn =
     async (id) => {
 
@@ -95,12 +90,11 @@ const MyBooks = () => {
         );
 
         setBooks(
-          books.filter(
-            (book) =>
-              book._id !== id
-          )
-        );
-
+    books.filter(
+        (borrow) =>
+            borrow.book._id !== id
+    )
+);
       } catch (error) {
 
         console.log(error);
@@ -239,34 +233,37 @@ const MyBooks = () => {
           }}
         >
 
-          {filteredBooks.map(
-            (book) => (
+          {filteredBooks.map((book) => (
 
-              <BookCard
-                key={
-                  book._id
-                }
+    <BookCard
+        key={book._id}
 
-                book={book}
+        book={{
+            ...book.book,
 
-                buttonText="Return Book"
+            dueDate:
+                book.dueDate,
 
-                buttonColor={
-                  colors.primary
-                }
+            borrowDate:
+                book.borrowDate
+        }}
 
-                showButton={true}
+        buttonText="Return Book"
 
-                showCopies={false}
+        buttonColor={
+            colors.primary
+        }
 
-                onClick={
-                  handleReturn
-                }
-              />
+        showButton={true}
 
-            )
-          )}
+        showCopies={false}
 
+        onClick={
+            handleReturn
+        }
+    />
+
+))}
         </div>
 
       )}

@@ -1,7 +1,7 @@
 // controllers/bookController.js
 
 const asyncHandler = require("express-async-handler");
-
+const Borrow = require("../models/borrowModel");
 const Book = require("../models/bookModel");
 
 
@@ -32,7 +32,7 @@ const getBooks = asyncHandler(async (req, res) => {
     }
 
     const books = await Book.find(query)
-    .populate("createdBy");
+        .populate("createdBy");
 
     res.status(200).json(books);
 });
@@ -171,35 +171,62 @@ const borrowBook = asyncHandler(async (req, res) => {
         });
     }
 
-    const alreadyBorrowed = book.borrowedBy.some(
-        (id) => id.toString() === req.user.id
-    );
+    const alreadyBorrowed = await Borrow.findOne({
+
+        user: req.user.id,
+
+        book: book._id,
+
+        returned: false
+
+    });
 
     if (alreadyBorrowed) {
+
         return res.status(400).json({
             message: "Book already borrowed"
         });
     }
 
+    const dueDate = new Date();
+
+    dueDate.setDate(
+        dueDate.getDate() + 14
+    );
+
+    await Borrow.create({
+
+        user: req.user.id,
+
+        book: book._id,
+
+        dueDate
+
+    });
+
     const updatedBook = await Book.findByIdAndUpdate(
+
         req.params.id,
+
         {
             $inc: {
                 availableCopies: -1
-            },
-
-            $push: {
-                borrowedBy: req.user.id
             }
         },
+
         { new: true }
     );
 
-    res.status(200).json({
-        message: "Book borrowed successfully",
-        updatedBook
-    });
 
+    res.status(200).json({
+
+        message: "Book borrowed successfully",
+
+        dueDate,
+
+        updatedBook
+
+    });
 });
 
 
@@ -209,41 +236,67 @@ const borrowBook = asyncHandler(async (req, res) => {
 
 const returnBook = asyncHandler(async (req, res) => {
 
-    const book = await Book.findById(req.params.id);
+    const book = await Book.findById(
+        req.params.id
+    );
 
     if (!book) {
+
         return res.status(404).json({
             message: "Book not found"
         });
     }
 
-    const borrowed = book.borrowedBy.some(
-        (id) => id.toString() === req.user.id
-    );
+    const borrowRecord =
+        await Borrow.findOne({
 
-    if (!borrowed) {
+            user: req.user.id,
+
+            book: book._id,
+
+            returned: false
+
+        });
+
+    if (!borrowRecord) {
+
         return res.status(400).json({
-            message: "You did not borrow this book"
+
+            message:
+                "You did not borrow this book"
+
         });
     }
 
-    const updatedBook = await Book.findByIdAndUpdate(
-        req.params.id,
-        {
-            $inc: {
-                availableCopies: 1
+    borrowRecord.returned =
+        true;
+
+    borrowRecord.returnDate =
+        new Date();
+
+    await borrowRecord.save();
+
+    const updatedBook =
+        await Book.findByIdAndUpdate(
+
+            req.params.id,
+
+            {
+                $inc: {
+                    availableCopies: 1
+                }
             },
 
-            $pull: {
-                borrowedBy: req.user.id
-            }
-        },
-        { new: true }
-    );
+            { new: true }
+        );
 
     res.status(200).json({
-        message: "Book returned successfully",
+
+        message:
+            "Book returned successfully",
+
         updatedBook
+
     });
 
 });
