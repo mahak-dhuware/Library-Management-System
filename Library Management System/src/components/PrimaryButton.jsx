@@ -1,7 +1,9 @@
+import { colors } from "../styles/theme";
+
 const PrimaryButton = ({
     text,
     onClick,
-    backgroundColor = "#0F766E",
+    backgroundColor = colors.primary,
     type = "button"
 }) => {
 
@@ -23,7 +25,7 @@ const PrimaryButton = ({
 
                 backgroundColor,
 
-                color: "white",
+                color: colors.white,
 
                 fontWeight: "600",
 

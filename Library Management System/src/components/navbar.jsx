@@ -28,7 +28,7 @@ const Navbar = () => {
 
         textDecoration: "none",
 
-        padding: "10px 16px",
+        padding: "8px 12px",
 
         borderRadius: "12px",
 
@@ -66,11 +66,15 @@ const Navbar = () => {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                padding: "12px 20px",
+                padding: "10px 16px",
                 backgroundColor: colors.white,
                 borderBottom: `1px solid ${colors.secondary}`,
-                position: "sticky",
+                position: "fixed",
                 top: 0,
+                left: 0,
+                right: 0,
+                width: "100%",
+                height: "54px",
                 zIndex: 1000,
                 gap: "12px"
             }}
@@ -94,7 +98,7 @@ const Navbar = () => {
 
             {/* LINKS (desktop) */}
             {!isMobile && (
-                <div style={{ display: "flex", alignItems: "center", gap: "14px", flex: 1, justifyContent: "center" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "10px", flex: 1, justifyContent: "center" }}>
                     {token && (
                         <Link to="/" style={linkStyle("/")} onClick={() => setMenuOpen(false)}>
                             Books
@@ -125,7 +129,7 @@ const Navbar = () => {
                         </Link>
                     </>
                 ) : (
-                    <button onClick={handleLogout} style={{ backgroundColor: colors.danger, color: "#FFFFFF", border: "none", padding: "8px 14px", borderRadius: "10px", cursor: "pointer", fontWeight: 600 }}>
+                    <button onClick={handleLogout} style={{ backgroundColor: colors.danger, color: "#FFFFFF", border: "none", padding: "8px 14px", borderRadius: "10px", cursor: "pointer", fontWeight: 600, marginRight: "45px" }}>
                         Logout
                     </button>
                 )}

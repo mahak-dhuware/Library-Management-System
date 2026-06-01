@@ -9,11 +9,12 @@ const PageContainer = ({
         <div
             style={{
                 minHeight: "100vh",
+                
 
                 backgroundColor:
                     colors.background,
 
-                padding: "24px 40px"
+                padding: "80px 40px 24px"
             }}
         >
             {children}

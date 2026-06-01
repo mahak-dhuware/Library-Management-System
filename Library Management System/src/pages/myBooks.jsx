@@ -121,8 +121,8 @@ const MyBooks = () => {
         subtitle="Manage books currently borrowed from the library."
       />
 
-      <div style={{ display: "flex", justifyContent: "center", marginBottom: "28px" }}>
-        <div style={{ width: "100%", maxWidth: "760px" }}>
+      <div style={{ display: "flex", justifyContent: "flex-start", marginBottom: "28px" }}>
+        <div style={{ width: "100%", maxWidth: "760px", alignSelf: "flex-start" }}>
           <InputField
             placeholder="Search my borrowed books..."
             value={search}

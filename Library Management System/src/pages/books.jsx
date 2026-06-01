@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 
 import BookCard from "../components/BookCard";
+import { colors } from "../styles/theme";
 
 import PageHeader from "../components/PageHeader";
 
@@ -117,47 +118,55 @@ const Books = () => {
 
         <PageContainer>
 
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "12px", marginBottom: "24px" }}>
-                <PageHeader
-                    title="Library Collection"
-                    subtitle="Browse and borrow books from the digital library."
-                />
+            <div style={{ width: "100%", marginBottom: "35px", marginTop: "0px" }}>
+                <div style={{ backgroundColor: colors.background, padding: "", borderRadius: 0 }}>
+                    <div style={{ width: "100%", maxHeight: "54px" }}>
+                        <PageHeader
+                            title="Library Collection"
+                            subtitle="Browse and borrow books from the digital library."
+                        />
+                    </div>
 
-                <div style={{ width: "100%", maxWidth: "760px" }}>
-                    <input
-                        type="text"
-                        placeholder="Search by title, author or genre..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        style={{
-                            width: "100%",
-                            padding: "14px 18px",
-                            borderRadius: "14px",
-                            border: "1px solid #E2E8F0",
-                            outline: "none",
-                            fontSize: "15px",
-                            backgroundColor: "#FFFFFF",
-                            boxShadow: "0 2px 10px rgba(2,6,23,0.06)"
-                        }}
-                    />
+                    
                 </div>
             </div>
 
             {/* BOOKS */}
 
-            <div
-                style={{
-                    display: "grid",
+            <div style={{ width: "100%" }}>
+                <div style={{ padding: 28, borderRadius: 0, backgroundColor: colors.background }}>
+                    <div style={{ width: "100%", marginBottom: "12px", display: "flex", justifyContent: "flex-start" }}>
+                        <input
+                            type="text"
+                            placeholder="Search by title, author or genre..."
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            style={{
+                                width: "100%",
+                                maxWidth: "520px",
+                                padding: "14px 18px",
+                                borderRadius: "4px",
+                                border: `1px solid ${colors.secondary}`,
+                                outline: "none",
+                                fontSize: "15px",
+                                backgroundColor: colors.white
+                            }}
+                        />
+                    </div>
+                    <div
+                        style={{
+                            display: "grid",
 
-                    gridTemplateColumns:
-                        "repeat(auto-fill, minmax(320px, 320px))",
+                            gridTemplateColumns:
+                                "repeat(auto-fill, minmax(280px, 1fr))",
 
-                    gap: "28px",
+                            gap: "12px",
 
-                    justifyContent:
-                        "start"
-                }}
-            >
+                            gridAutoFlow: "dense",
+
+                            alignItems: "stretch"
+                        }}
+                    >
 
                 {filteredBooks.map(
                     (book) => (
@@ -177,8 +186,8 @@ const Books = () => {
 
                             buttonColor={
                                 book.availableCopies > 0
-                                    ? "#0F766E"
-                                    : "#94A3B8"
+                                    ? colors.primary
+                                    : colors.secondary
                             }
 
                             showButton={
@@ -193,6 +202,8 @@ const Books = () => {
                     )
                 )}
 
+                    </div>
+                </div>
             </div>
 
         </PageContainer>

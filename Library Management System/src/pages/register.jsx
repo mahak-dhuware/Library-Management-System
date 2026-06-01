@@ -88,12 +88,9 @@ const Register = () => {
                         `1px solid ${colors.secondary}`,
 
                     borderRadius:
-                        "24px",
+                        "10px",
 
-                    padding: "40px",
-
-                    boxShadow:
-                        "0 10px 30px rgba(15,118,110,0.08)"
+                    padding: "40px"
                 }}
             >
 

@@ -21,12 +21,10 @@ const BookCard = ({
                 border:
                     `1px solid ${colors.border}`,
 
-                borderRadius:
-                    "20px",
 
                 padding: "24px",
 
-                minHeight: "260px",
+                minHeight: "320px",
 
                 display: "flex",
 
@@ -36,8 +34,7 @@ const BookCard = ({
                 justifyContent:
                     "space-between",
 
-                boxShadow:
-                    "0 8px 24px rgba(15,118,110,0.05)"
+                
             }}
         >
 
@@ -117,24 +114,24 @@ const BookCard = ({
                 </p>
                 {showCopies && (
 
-    <p
-        style={{
-            color:
-                book.availableCopies > 0
-                    ? "#0F766E"
-                    : "#F87171",
+        <p
+            style={{
+                color:
+                    book.availableCopies > 0
+                        ? colors.primary
+                        : colors.danger,
 
-            fontWeight: "600",
+                fontWeight: "600",
 
-            marginBottom:
-                "10px"
-        }}
-    >
-        Available Copies:{" "}
-        {book.availableCopies}
-    </p>
+                marginBottom:
+                    "10px"
+            }}
+        >
+            Available Copies:{" "}
+            {book.availableCopies}
+        </p>
 
-)}
+    )}
             </div>
 
             {showButton && (

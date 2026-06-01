@@ -23,7 +23,7 @@ const InputField = ({
 
                 padding: "14px 16px",
 
-                borderRadius: "12px",
+                borderRadius: "8px",
 
                 border:
                     `1px solid ${colors.secondary}`,
