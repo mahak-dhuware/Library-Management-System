@@ -122,4 +122,30 @@ const myBooks = asyncHandler(async (req, res) => {
     );
 
 });
-module.exports = {registerUser, loginUser, currentUser, myBooks};
+
+const getBorrowHistory =
+asyncHandler(async (req, res) => {
+
+    const history = await Borrow.find({
+
+        user: req.user.id,
+
+        returned: true
+
+    })
+    .populate(
+        "book",
+        "title author genre"
+    );
+
+    res.status(200).json(history);
+
+});
+
+module.exports = {
+    registerUser,
+    loginUser,
+    currentUser,
+    myBooks,
+    getBorrowHistory
+};

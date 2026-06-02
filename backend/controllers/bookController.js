@@ -247,16 +247,21 @@ const returnBook = asyncHandler(async (req, res) => {
         });
     }
 
-    const borrowRecord =
-        await Borrow.findOne({
+    const borrowRecord = await Borrow.findOne({
 
-            user: req.user.id,
+    user: req.user.id,
 
-            book: book._id,
+    book: book._id,
 
-            returned: false
+    returned: false
 
-        });
+});
+
+borrowRecord.returned = true;
+
+borrowRecord.returnDate = new Date();
+
+await borrowRecord.save();
 
     if (!borrowRecord) {
 
@@ -268,14 +273,7 @@ const returnBook = asyncHandler(async (req, res) => {
         });
     }
 
-    borrowRecord.returned =
-        true;
-
-    borrowRecord.returnDate =
-        new Date();
-
-    await borrowRecord.save();
-
+    
     const updatedBook =
         await Book.findByIdAndUpdate(
 

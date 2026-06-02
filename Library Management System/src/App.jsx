@@ -12,6 +12,8 @@ import MyBooks from "./pages/MyBooks";
 import AdminDashboard from "./pages/AdminDashboard";
 
 import Navbar from "./components/Navbar";
+import History
+from "./pages/History";
 
 function AppContent() {
 
@@ -56,6 +58,11 @@ function AppContent() {
                     path="/admin"
                     element={<AdminDashboard />}
                 />
+
+                <Route
+    path="/history"
+    element={<History />}
+/>
 
             </Routes>
 

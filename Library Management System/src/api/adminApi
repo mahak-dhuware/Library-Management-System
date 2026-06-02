@@ -1,0 +1,42 @@
+import axios from "axios";
+
+export const getBorrowRecords = async () => {
+
+    const token =
+        localStorage.getItem("token");
+
+    const response =
+        await axios.get(
+            "http://localhost:5001/api/admin/borrow-records",
+            {
+                headers: {
+                    Authorization:
+                        `Bearer ${token}`
+                }
+            }
+        );
+
+    return response.data;
+};
+
+export const getOverdueBooks =
+    async () => {
+
+        const token =
+            localStorage.getItem(
+                "token"
+            );
+
+        const response =
+            await axios.get(
+                "http://localhost:5001/api/admin/overdue",
+                {
+                    headers: {
+                        Authorization:
+                            `Bearer ${token}`
+                    }
+                }
+            );
+
+        return response.data;
+    };

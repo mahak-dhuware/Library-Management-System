@@ -18,7 +18,14 @@ import {
 
 import { colors } from "../styles/theme";
 
+
+import {
+    getBorrowRecords,
+    getOverdueBooks
+} from "../api/adminApi";
+
 const AdminDashboard = () => {
+
 
     const [title, setTitle] =
         useState("");
@@ -42,6 +49,24 @@ const AdminDashboard = () => {
 
     const [search, setSearch] =
         useState("");
+
+    const [records, setRecords] =
+        useState([]);
+
+    const [overdueBooks,
+        setOverdueBooks] =
+        useState([]);
+    const totalBooks = books.length;
+
+    const activeBorrows =
+        records.filter(
+            (record) =>
+                !record.returned
+        ).length;
+
+    const overdueCount =
+        overdueBooks.length;
+
 
     const currentUser =
         JSON.parse(
@@ -71,15 +96,31 @@ const AdminDashboard = () => {
 
     useEffect(() => {
 
-        const fetchBooks =
+        const fetchData =
             async () => {
 
                 try {
 
-                    const data =
+                    const booksData =
                         await getBooks();
 
-                    setBooks(data);
+                    setBooks(
+                        booksData
+                    );
+
+                    const recordsData =
+                        await getBorrowRecords();
+
+                    setRecords(
+                        recordsData
+                    );
+
+                    const overdueData =
+                        await getOverdueBooks();
+
+                    setOverdueBooks(
+                        overdueData
+                    );
 
                 } catch (error) {
 
@@ -87,10 +128,9 @@ const AdminDashboard = () => {
                 }
             };
 
-        fetchBooks();
+        fetchData();
 
     }, []);
-
     const handleAddBook =
         async (e) => {
 
@@ -132,6 +172,8 @@ const AdminDashboard = () => {
             }
         };
 
+
+
     const handleDelete =
         async (id) => {
 
@@ -169,6 +211,53 @@ const AdminDashboard = () => {
 
                 subtitle="Manage books and monitor library inventory."
             />
+            <div
+                style={{
+                    display: "grid",
+                    gridTemplateColumns:
+                        "repeat(3, 1fr)",
+                    gap: "20px",
+                    marginBottom: "40px"
+                }}
+            >
+
+                <div
+                    style={{
+                        background: "#fff",
+                        padding: "24px",
+                        borderRadius: "20px",
+                        border: "1px solid #E2E8F0"
+                    }}
+                >
+                    <h3>Total Books</h3>
+                    <h1>{totalBooks}</h1>
+                </div>
+
+                <div
+                    style={{
+                        background: "#fff",
+                        padding: "24px",
+                        borderRadius: "20px",
+                        border: "1px solid #E2E8F0"
+                    }}
+                >
+                    <h3>Active Borrows</h3>
+                    <h1>{activeBorrows}</h1>
+                </div>
+
+                <div
+                    style={{
+                        background: "#fff",
+                        padding: "24px",
+                        borderRadius: "20px",
+                        border: "1px solid #E2E8F0"
+                    }}
+                >
+                    <h3>Overdue Books</h3>
+                    <h1>{overdueCount}</h1>
+                </div>
+
+            </div>
 
             {/* FORM */}
 
@@ -389,7 +478,7 @@ const AdminDashboard = () => {
                                     book
                                         .createdBy
                                         ._id ===
-                                        currentUser?.id
+                                    currentUser?.id
                                 }
 
                                 onClick={
@@ -402,7 +491,117 @@ const AdminDashboard = () => {
 
             </div>
 
+            <h2
+                style={{
+                    marginTop: "50px"
+                }}
+            >
+                Borrow Records
+            </h2>
+
+            {records.map((record) => (
+
+                <div
+                    key={record._id}
+                    style={{
+                        border: "1px solid #ddd",
+                        padding: "12px",
+                        marginBottom: "12px"
+                    }}
+                >
+
+                    <p>
+                        User:
+                        {record.user?.name}
+                    </p>
+
+                    <p>
+                        Book:
+                        {record.book?.title}
+                    </p>
+
+                    <p>
+                        Borrowed:
+                        {new Date(
+                            record.borrowDate
+                        ).toLocaleDateString()}
+                    </p>
+
+                    <p>
+                        Due:
+                        {new Date(
+                            record.dueDate
+                        ).toLocaleDateString()}
+                    </p>
+
+                    <p>
+                        Status:
+                        {record.returned
+                            ? "Returned"
+                            : "Active"}
+                    </p>
+
+                </div>
+
+            ))}
+
+            <h2
+                style={{
+                    marginTop: "50px"
+                }}
+            >
+                Overdue Books
+            </h2>
+            {overdueBooks.length === 0 ? (
+
+                <p>
+                    No overdue books
+                </p>
+
+            ) : (
+
+                overdueBooks.map(
+                    (record) => (
+
+                        <div
+                            key={record._id}
+                            style={{
+                                border:
+                                    "1px solid red",
+
+                                padding:
+                                    "12px",
+
+                                marginBottom:
+                                    "12px"
+                            }}
+                        >
+
+                            <p>
+                                User:
+                                {record.user?.name}
+                            </p>
+
+                            <p>
+                                Book:
+                                {record.book?.title}
+                            </p>
+
+                            <p>
+                                Due Date:
+                                {new Date(
+                                    record.dueDate
+                                ).toLocaleDateString()}
+                            </p>
+
+                        </div>
+
+                    )
+                )
+
+            )}
         </PageContainer>
+
     );
 }
 
