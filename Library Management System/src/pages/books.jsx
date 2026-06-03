@@ -65,12 +65,12 @@ const Books = () => {
 
                             book._id === id
                                 ? {
-                                      ...book,
+                                    ...book,
 
-                                      availableCopies:
-                                          book.availableCopies -
-                                          1
-                                  }
+                                    availableCopies:
+                                        book.availableCopies -
+                                        1
+                                }
                                 : book
                     )
                 );
@@ -118,16 +118,43 @@ const Books = () => {
 
         <PageContainer>
 
-            <div style={{ width: "100%", marginBottom: "35px", marginTop: "0px" }}>
-                <div style={{ backgroundColor: colors.background, padding: "", borderRadius: 0 }}>
-                    <div style={{ width: "100%", maxHeight: "54px" }}>
-                        <PageHeader
-                            title="Library Collection"
-                            subtitle="Browse and borrow books from the digital library."
-                        />
+            <div style={{ width: "100%"}}>
+
+                <div
+                    style={{
+                        backgroundColor: colors.background,
+                        padding: "28px",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        gap: "20px",
+                    }}
+                >
+                    {/* Left: Header */}
+                    <div style={{ flex: 1 }}>
+                        <PageHeader title="Library Collection" subtitle="Browse and borrow books from the digital library." />
                     </div>
 
-                    
+                    {/* Right: Search */}
+                    <div style={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
+                        <input
+                            type="text"
+                            placeholder="Search by title, author or genre..."
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            style={{
+                                width: "80%",
+                                maxWidth: "420px",
+                                padding: "12px 16px",
+                                borderRadius: "4px",
+                                border: `1px solid ${colors.secondary}`,
+                                outline: "none",
+                                fontSize: "14px",
+                                backgroundColor: colors.white,
+                                
+                            }}
+                        />
+                    </div>
                 </div>
             </div>
 
@@ -135,24 +162,7 @@ const Books = () => {
 
             <div style={{ width: "100%" }}>
                 <div style={{ padding: 28, borderRadius: 0, backgroundColor: colors.background }}>
-                    <div style={{ width: "100%", marginBottom: "12px", display: "flex", justifyContent: "flex-start" }}>
-                        <input
-                            type="text"
-                            placeholder="Search by title, author or genre..."
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                            style={{
-                                width: "100%",
-                                maxWidth: "520px",
-                                padding: "14px 18px",
-                                borderRadius: "4px",
-                                border: `1px solid ${colors.secondary}`,
-                                outline: "none",
-                                fontSize: "15px",
-                                backgroundColor: colors.white
-                            }}
-                        />
-                    </div>
+
                     <div
                         style={{
                             display: "grid",
@@ -168,45 +178,46 @@ const Books = () => {
                         }}
                     >
 
-                {filteredBooks.map(
-                    (book) => (
+                        {filteredBooks.map(
+                            (book) => (
 
-                        <BookCard
-                            key={
-                                book._id
-                            }
+                                <BookCard
+                                    key={
+                                        book._id
+                                    }
 
-                            book={book}
+                                    book={book}
 
-                            buttonText={
-                                book.availableCopies > 0
-                                    ? "Borrow Book"
-                                    : "Unavailable"
-                            }
+                                    buttonText={
+                                        book.availableCopies > 0
+                                            ? "Borrow Book"
+                                            : "Unavailable"
+                                    }
 
-                            buttonColor={
-                                book.availableCopies > 0
-                                    ? colors.primary
-                                    : colors.secondary
-                            }
+                                    buttonColor={
+                                        book.availableCopies > 0
+                                            ? colors.primary
+                                            : colors.secondary
+                                    }
 
-                            showButton={
-                                true
-                            }
+                                    showButton={
+                                        true
+                                    }
 
-                            onClick={
-                                handleBorrow
-                            }
-                        />
+                                    onClick={
+                                        handleBorrow
+                                    }
+                                />
 
-                    )
-                )}
+                            )
+                        )}
 
                     </div>
                 </div>
             </div>
 
         </PageContainer>
+
     );
 };
 

@@ -1,14 +1,18 @@
 export const colors = {
 
+    green: "#39c01a",
+
+    border: "#E8D5B7",
+
     primary: "#6F4C3E",
 
     primaryLight: "#E8CBA0",
 
     secondary: "#C2B280",
 
-    danger: "#A67C4D",
+    danger: "#ee2626",
 
-    white: "#FFFFFF",
+    white: "#ffffff",
 
     background: "#D9B68D",
 

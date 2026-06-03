@@ -21,8 +21,9 @@ import { colors } from "../styles/theme";
 
 import {
     getBorrowRecords,
-    getOverdueBooks
-} from "../api/adminApi";
+    getOverdueBooks,
+    getDashboardStats
+} from "../api/adminApi.js";
 
 const AdminDashboard = () => {
 
@@ -66,6 +67,14 @@ const AdminDashboard = () => {
 
     const overdueCount =
         overdueBooks.length;
+
+    const [stats, setStats] =
+    useState({
+        totalBooks: 0,
+        borrowedBooks: 0,
+        returnedBooks: 0,
+        overdueBooks: 0
+    });
 
 
     const currentUser =
@@ -258,6 +267,37 @@ const AdminDashboard = () => {
                 </div>
 
             </div>
+            <div
+    style={{
+        display: "grid",
+        gridTemplateColumns:
+            "repeat(auto-fit, minmax(220px, 1fr))",
+        gap: "20px",
+        marginBottom: "35px"
+    }}
+>
+
+    <div className="stat-card">
+        <h3>Total Books</h3>
+        <h1>{stats.totalBooks}</h1>
+    </div>
+
+    <div className="stat-card">
+        <h3>Borrowed Books</h3>
+        <h1>{stats.borrowedBooks}</h1>
+    </div>
+
+    <div className="stat-card">
+        <h3>Returned Books</h3>
+        <h1>{stats.returnedBooks}</h1>
+    </div>
+
+    <div className="stat-card">
+        <h3>Overdue Books</h3>
+        <h1>{stats.overdueBooks}</h1>
+    </div>
+
+</div>
 
             {/* FORM */}
 

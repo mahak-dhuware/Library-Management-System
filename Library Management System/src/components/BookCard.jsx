@@ -14,32 +14,20 @@ const BookCard = ({
     return (
 
         <div
-            style={{
-                backgroundColor:
-                    colors.white,
+    style={{
+        backgroundColor: colors.white,
+        border: `1px solid ${colors.border}`,
+        padding: "24px",
+        borderRadius: "0px",
+        // boxShadow: "0 4px 12px rgba(15,118,110,0.08)",
 
-                border:
-                    `1px solid ${colors.border}`,
+        height: "75%",
+        minHeight: "360px",
 
-
-                padding: "24px",
-
-                minHeight: "340px",
-borderRadius: "20px",
-boxShadow:
-    "0 4px 12px rgba(15,118,110,0.08)",
-
-                display: "flex",
-
-                flexDirection:
-                    "column",
-
-                justifyContent:
-                    "space-between",
-
-                
-            }}
-        >
+        display: "flex",
+        flexDirection: "column",
+    }}
+>
 
             <div>
 
@@ -75,6 +63,8 @@ boxShadow:
                 <h3
                     style={{
                         fontSize: "28px",
+
+                        height: "60px",
 
                         marginBottom:
                             "16px",

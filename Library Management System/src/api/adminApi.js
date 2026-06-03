@@ -40,3 +40,25 @@ export const getOverdueBooks =
 
         return response.data;
     };
+
+    export const getDashboardStats =
+    async () => {
+
+        const token =
+            localStorage.getItem(
+                "token"
+            );
+
+        const response =
+            await axios.get(
+                "http://localhost:5001/api/admin/stats",
+                {
+                    headers: {
+                        Authorization:
+                            `Bearer ${token}`
+                    }
+                }
+            );
+
+        return response.data;
+    };

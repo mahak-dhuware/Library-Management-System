@@ -4,7 +4,8 @@ const router = express.Router();
 
 const {
     getBorrowRecords,
-    getOverdueBooks
+    getOverdueBooks,
+    getDashboardStats
 } = require("../controllers/adminController");
 
 const validateToken =
@@ -25,6 +26,12 @@ router.get(
     validateToken,
     adminOnly,
     getOverdueBooks
+);
+
+router.get(
+    "/stats",
+    validateToken,
+    getDashboardStats
 );
 
 module.exports = router;

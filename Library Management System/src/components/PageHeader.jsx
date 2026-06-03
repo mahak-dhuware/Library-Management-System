@@ -8,18 +8,15 @@ const PageHeader = ({
     return (
 
         <div
-            style={{
-                marginBottom: "35px"
-            }}
         >
 
             <h1
                 style={{
-                    fontSize: "42px",
+                    fontSize: "40px",
 
                     color: colors.primary,
 
-                    marginBottom: "10px"
+                    marginBottom: "0px"
                 }}
             >
                 {title}
@@ -29,7 +26,7 @@ const PageHeader = ({
                 style={{
                     color: "#64748B",
 
-                    fontSize: "17px"
+                    fontSize: "15px"
                 }}
             >
                 {subtitle}

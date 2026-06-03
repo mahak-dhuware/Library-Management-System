@@ -131,10 +131,10 @@ const MyBooks = () => {
 
     <PageContainer>
 
-      <PageHeader
-    title="My Books"
-    subtitle="Manage your library activity."
-/>
+      {/* <PageHeader
+        title="My Borrowed Books"
+        subtitle="Manage books currently borrowed from the library."
+      /> */}
 
       <div
         style={{
@@ -154,15 +154,7 @@ const MyBooks = () => {
           }}
         >
 
-          <InputField
-            placeholder="Search my borrowed books..."
-            value={search}
-            onChange={(e) =>
-              setSearch(
-                e.target.value
-              )
-            }
-          />
+
 
           <div
             style={{
@@ -222,111 +214,74 @@ const MyBooks = () => {
 
       </div>
       {activeTab === "current" &&
- filteredBooks.length > 0 && (
+        filteredBooks.length > 0 && (
+          <>
+            <InputField
+              placeholder="Search my borrowed books..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              style={{
+                width: "80%",
+                maxWidth: "320px",
+                padding: "12px 16px",
+                borderRadius: "4px",
+                border: `1px solid ${colors.secondary}`,
+                outline: "none",
+                fontSize: "14px",
+                backgroundColor: colors.white,
+
+              }}
+            />
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns:
+                  "repeat(auto-fill, minmax(320px, 320px))",
+                gap: "28px",
+                justifyContent: "start",
+                marginBottom: "60px",
+              }}
+            >
+              {filteredBooks.map((borrow) => (
+                <BookCard
+                  key={borrow._id}
+                  book={{
+                    ...borrow.book,
+                    dueDate: borrow.dueDate,
+                    borrowDate: borrow.borrowDate,
+                  }}
+                  buttonText="Return Book"
+                  buttonColor={colors.primary}
+                  showButton={true}
+                  showCopies={false}
+                  onClick={handleReturn}
+                />
+              ))}
+            </div>
+          </>
+        )}
 
 
-
-        <div
-          style={{
-            display: "grid",
-
-            gridTemplateColumns:
-              "repeat(auto-fill, minmax(320px, 320px))",
-
-            gap: "28px",
-
-            justifyContent:
-              "start",
-
-            marginBottom:
-              "60px"
-          }}
-        >
-
-          {filteredBooks.map(
-            (borrow) => (
-
-              <BookCard
-                key={
-                  borrow._id
-                }
-
-                book={{
-                  ...borrow.book,
-
-                  dueDate:
-                    borrow.dueDate,
-
-                  borrowDate:
-                    borrow.borrowDate
-                }}
-
-                buttonText="Return Book"
-
-                buttonColor={
-                  colors.primary
-                }
-
-                showButton={
-                  true
-                }
-
-                showCopies={
-                  false
-                }
-
-                onClick={
-                  handleReturn
-                }
-              />
-
-            )
-          )}
-
-        </div>
-
-      )}
 
       {activeTab === "current" &&
- filteredBooks.length === 0 && (
+        filteredBooks.length === 0 && (
+          <><InputField
+            placeholder="Search my borrowed books..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            style={{
+              width: "80%",
+              maxWidth: "320px",
+              padding: "12px 16px",
+              borderRadius: "4px",
+              border: `1px solid ${colors.secondary}`,
+              outline: "none",
+              fontSize: "14px",
+              backgroundColor: colors.white,
 
-        <div
-          style={{
-            backgroundColor:
-              colors.white,
-
-            border:
-              `1px solid ${colors.border}`,
-
-            padding:
-              "40px",
-
-            borderRadius:
-              "20px",
-
-            textAlign:
-              "center"
-          }}
-        >
-
-          <h2>
-            No Borrowed Books
-          </h2>
-
-          <p>
-            Borrow books from the library to see them here.
-          </p>
-
-        </div>
-
-      )}
-
-      {activeTab === "history" && (
-        <>
-          
-
-          {history.length === 0 ? (
-
+            }}
+          />
             <div
               style={{
                 backgroundColor:
@@ -347,80 +302,112 @@ const MyBooks = () => {
             >
 
               <h2>
-                No History Found
+                No Borrowed Books
               </h2>
 
               <p>
-                Returned books will appear here.
+                Borrow books from the library to see them here.
               </p>
 
             </div>
 
-          ) : (
+          </>)}
 
-            <div
-              style={{
-                display: "grid",
+      {activeTab === "history" && (
 
-                gridTemplateColumns:
-                  "repeat(auto-fill, minmax(320px, 320px))",
+        history.length === 0 ? (
 
-                gap: "24px",
+          <div
+            style={{
+              backgroundColor: colors.white,
+              border: `1px solid ${colors.border}`,
+              padding: "40px",
+              borderRadius: "20px",
+              textAlign: "center"
+            }}
+          >
+            <h2>No History Found</h2>
 
-                justifyContent:
-                  "start"
-              }}
-            >
+            <p>
+              Returned books will appear here.
+            </p>
+          </div>
 
-              {history.map((record) => (
+        ) : (
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns:
+                "repeat(auto-fill, minmax(340px, 1fr))",
+              gap: "24px"
+            }}
+          >
+
+            {history.map((record) => (
+
+              <div
+                key={record._id}
+                style={{
+                  background: colors.white,
+                  border: `1px solid ${colors.border}`,
+                  borderRadius: "20px",
+                  padding: "24px",
+                  boxShadow:
+                    "0 6px 18px rgba(0,0,0,0.05)"
+                }}
+              >
 
                 <div
-                  key={record._id}
                   style={{
-                    background: colors.white,
-                    border: `1px solid ${colors.border}`,
-                    borderRadius: "16px",
-                    padding: "20px"
+                    fontSize: "30px",
+                    marginBottom: "12px"
                   }}
                 >
-
-                  <h3>{record.book?.title}</h3>
-
-                  <p>
-                    Author: {record.book?.author}
-                  </p>
-
-                  <p>
-                    Borrowed:
-                    {" "}
-                    {new Date(
-                      record.borrowDate
-                    ).toLocaleDateString()}
-                  </p>
-
-                  <p>
-                    Returned:{" "}
-                    {record.returnDate
-                      ? new Date(
-                        record.returnDate
-                      ).toLocaleDateString()
-                      : "Not Returned"}
-                  </p>
+                  📚
                 </div>
-                
 
-              ))}
+                <h3
+                  style={{
+                    marginBottom: "16px",
+                    color: colors.textDark
+                  }}
+                >
+                  {record.book?.title}
+                </h3>
 
-            </div>
-            
+                <p>
+                  <strong>Author:</strong>{" "}
+                  {record.book?.author}
+                </p>
 
+                <p>
+                  <strong>Borrowed:</strong>{" "}
+                  {new Date(
+                    record.borrowDate
+                  ).toLocaleDateString()}
+                </p>
 
-          )}
-          </>
-)}
+                <p>
+                  <strong>Returned:</strong>{" "}
+                  {record.returnDate
+                    ? new Date(
+                      record.returnDate
+                    ).toLocaleDateString()
+                    : "Not Returned"}
+                </p>
 
-        </PageContainer>
-      );
+              </div>
+
+            ))}
+
+          </div>
+
+        )
+
+      )}
+    </PageContainer>
+  );
 };
 
-      export default MyBooks;
+export default MyBooks;sd

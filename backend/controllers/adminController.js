@@ -1,8 +1,40 @@
 const asyncHandler =
     require("express-async-handler");
 
-const Borrow =
-    require("../models/borrowModel");
+const Book = require("../models/bookModel");
+const Borrow = require("../models/borrowModel");
+
+const getDashboardStats =
+asyncHandler(async (req, res) => {
+
+    const totalBooks =
+        await Book.countDocuments();
+
+    const borrowedBooks =
+        await Borrow.countDocuments({
+            returned: false
+        });
+
+    const returnedBooks =
+        await Borrow.countDocuments({
+            returned: true
+        });
+
+    const overdueBooks =
+        await Borrow.countDocuments({
+            returned: false,
+            dueDate: {
+                $lt: new Date()
+            }
+        });
+
+    res.json({
+        totalBooks,
+        borrowedBooks,
+        returnedBooks,
+        overdueBooks
+    });
+});
 
 const getBorrowRecords =
     asyncHandler(async (req, res) => {
@@ -73,5 +105,6 @@ const getOverdueBooks =
 
 module.exports = {
     getBorrowRecords,
-    getOverdueBooks
+    getOverdueBooks,
+    getDashboardStats
 };
