@@ -13,7 +13,7 @@ import AdminDashboard from "./pages/adminDashboard.jsx";
 
 import Navbar from "./components/navbar.jsx";
 import History
-from "./pages/history.jsx";
+from "./pages/History.jsx";
 
 function AppContent() {
 
