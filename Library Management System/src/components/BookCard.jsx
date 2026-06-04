@@ -10,7 +10,7 @@ const BookCard = ({
     showButton = true,
     showCopies = true
 })  => {
-
+ if (!book) return null;
     return (
 
         <div

@@ -40,7 +40,7 @@ const MyBooks = () => {
 
           const booksResponse =
             await axios.get(
-              "http://localhost:5001/api/users/mybooks",
+              "https://library-management-system-28ta.onrender.com/api/users/mybooks",
               {
                 headers: {
                   Authorization:
@@ -51,7 +51,7 @@ const MyBooks = () => {
 
           const historyResponse =
             await axios.get(
-              "http://localhost:5001/api/users/history",
+              "https://library-management-system-28ta.onrender.com/api/users/history",
               {
                 headers: {
                   Authorization:
@@ -59,7 +59,7 @@ const MyBooks = () => {
                 }
               }
             );
-
+console.log("Books:", booksResponse.data);
           setBooks(
             booksResponse.data
           );
@@ -237,7 +237,9 @@ const MyBooks = () => {
           gap: "20px",
         }}
       >
-        {books.map((borrow) => (
+        {books
+  .filter((borrow) => borrow?.book)
+  .map((borrow) => (
           <BookCard
             key={borrow._id}
             book={borrow.book}
