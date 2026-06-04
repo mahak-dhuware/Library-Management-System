@@ -5,15 +5,15 @@ import {
     useLocation
 } from "react-router-dom";
 
-import Books from "./pages/Books.jsx";
-import Login from "./pages/Login.jsx";
-import Register from "./pages/Register.jsx";
-import MyBooks from "./pages/MyBooks.jsx";
-import AdminDashboard from "./pages/AdminDashboard.jsx";
+import Books from "./pages/books.jsx";
+import Login from "./pages/login.jsx";
+import Register from "./pages/register.jsx";
+import MyBooks from "./pages/myBooks.jsx";
+import AdminDashboard from "./pages/adminDashboard.jsx";
 
 import Navbar from "./components/navbar.jsx";
 import History
-from "./pages/History.jsx";
+from "./pages/history.jsx";
 
 function AppContent() {
 
