@@ -7,7 +7,7 @@ export const getBorrowRecords = async () => {
 
     const response =
         await axios.get(
-            "http://localhost:5001/api/admin/borrow-records",
+           "https://library-management-system-28ta.onrender.com/api/admin/borrow-records",
             {
                 headers: {
                     Authorization:

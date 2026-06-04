@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const BASE_URL =
-    "http://localhost:5001/api/books";
+    "https://library-management-system-28ta.onrender.com/api/books";
 
 export const getBooks = async () => {
 

@@ -2,17 +2,17 @@ import { useEffect, useState } from "react";
 
 import { Navigate } from "react-router-dom";
 
-import BookCard from "../components/BookCard";
-import { colors } from "../styles/theme";
+import BookCard from "../components/BookCard.jsx";
+import { colors } from "../styles/theme.js";
 
-import PageHeader from "../components/PageHeader";
+import PageHeader from "../components/PageHeader.jsx";
 
-import PageContainer from "../components/PageContainer";
+import PageContainer from "../components/PageContainer.jsx";
 
 import {
     getBooks,
     borrowBook
-} from "../api/bookApi";
+} from "../api/bookApi.js";
 
 const Books = () => {
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API_URL =
-    "http://localhost:5001/api/users";
+    "https://library-management-system-28ta.onrender.com/api/users";
 
 export const getBorrowHistory =
     async () => {

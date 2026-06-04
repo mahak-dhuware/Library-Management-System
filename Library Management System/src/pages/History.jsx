@@ -4,14 +4,14 @@ import {
 } from "react";
 
 import PageContainer
-from "../components/PageContainer";
+from "../components/PageContainer.jsx";
 
 import PageHeader
-from "../components/PageHeader";
+from "../components/PageHeader.jsx";
 
 import {
     getBorrowHistory
-} from "../api/userApi";
+} from "../api/userApi.js";
 
 const History = () => {
 

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import BookCard from "../components/BookCard";
-import InputField from "../components/InputField";
-import PageHeader from "../components/PageHeader";
-import PageContainer from "../components/PageContainer";
+import BookCard from "../components/BookCard.jsx";
+import InputField from "../components/InputField.jsx";
+import PageHeader from "../components/PageHeader.jsx";
+import PageContainer from "../components/PageContainer.jsx";
 
-import { returnBook } from "../api/bookApi";
-import { colors } from "../styles/theme";
+import { returnBook } from "../api/bookApi.js";
+import { colors } from "../styles/theme.js";
 
 const MyBooks = () => {
 

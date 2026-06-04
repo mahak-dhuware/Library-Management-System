@@ -1,22 +1,22 @@
 import { useState, useEffect } from "react";
 
-import BookCard from "../components/BookCard";
+import BookCard from "../components/BookCard.jsx";
 
-import PageHeader from "../components/PageHeader";
+import PageHeader from "../components/PageHeader.jsx";
 
-import PageContainer from "../components/PageContainer";
+import PageContainer from "../components/PageContainer.jsx";
 
-import InputField from "../components/InputField";
+import InputField from "../components/InputField.jsx";
 
-import PrimaryButton from "../components/PrimaryButton";
+import PrimaryButton from "../components/PrimaryButton.jsx";
 
 import {
     getBooks,
     addBook,
     deleteBook
-} from "../api/bookApi";
+} from "../api/bookApi.js";
 
-import { colors } from "../styles/theme";
+import { colors } from "../styles/theme.js";
 
 
 import {

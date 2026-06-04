@@ -1,6 +1,6 @@
-import PrimaryButton from "./PrimaryButton";
+import PrimaryButton from "./PrimaryButton.jsx";
 
-import { colors } from "../styles/theme";
+import { colors } from "../styles/theme.js";
 
 const BookCard = ({
     book,

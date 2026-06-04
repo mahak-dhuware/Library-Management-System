@@ -4,11 +4,11 @@ import axios from "axios";
 
 import { Link, useNavigate } from "react-router-dom";
 
-import InputField from "../components/InputField";
+import InputField from "../components/InputField.jsx";
 
-import PrimaryButton from "../components/PrimaryButton";
+import PrimaryButton from "../components/PrimaryButton.jsx";
 
-import { colors } from "../styles/theme";
+import { colors } from "../styles/theme.js";
 
 const Register = () => {
 

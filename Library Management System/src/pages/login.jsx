@@ -4,11 +4,11 @@ import { useNavigate, Link } from "react-router-dom";
 
 import axios from "axios";
 
-import InputField from "../components/InputField";
+import InputField from "../components/InputField.jsx";
 
-import PrimaryButton from "../components/PrimaryButton";
+import PrimaryButton from "../components/PrimaryButton.jsx";
 
-import { colors } from "../styles/theme";
+import { colors } from "../styles/theme.js";
 
 const Login = () => {
 
