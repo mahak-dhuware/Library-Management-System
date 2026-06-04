@@ -30,7 +30,7 @@ const Register = () => {
         try {
 
             await axios.post(
-                "http://localhost:5001/api/users/register",
+                "https://library-management-system-28ta.onrender.com/api/users/register",
                 {
                     name,
                     email,
