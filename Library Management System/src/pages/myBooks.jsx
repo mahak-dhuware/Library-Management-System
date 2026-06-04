@@ -19,9 +19,12 @@ const MyBooks = () => {
 
   const [search, setSearch] =
     useState("");
+    const [menuOpen, setMenuOpen] = useState(false);
 
   const [activeTab, setActiveTab] =
     useState("current");
+
+    
 
   useEffect(() => {
 
@@ -128,286 +131,184 @@ const MyBooks = () => {
     };
 
   return (
+ <PageContainer>
 
-    <PageContainer>
+  {/* ================= HEADER WRAPPER ================= */}
+  <div
+    style={{
+      position: "relative",
+      marginBottom: "24px",
+    }}
+  >
 
-      {/* <PageHeader
-        title="My Borrowed Books"
-        subtitle="Manage books currently borrowed from the library."
-      /> */}
+    {/* PAGE HEADER (FULL WIDTH) */}
+    <PageHeader
+      title="My Borrowed Books"
+      subtitle="Track and manage your library activity"
+      icon="📖"
+    />
 
-      <div
+    {/* MENU BUTTON (INSIDE HEADER AREA - TOP RIGHT) */}
+    <div
+      style={{
+        position: "absolute",
+        top: "10px",
+        right: "10px",
+      }}
+    >
+      <button
+        onClick={() => setMenuOpen(!menuOpen)}
         style={{
-          display: "flex",
-          justifyContent:
-            "flex-start",
-          marginBottom:
-            "28px"
+          width: "44px",
+          height: "44px",
+          borderRadius: "12px",
+          border: `1px solid ${colors.border}`,
+          background: colors.white,
+          cursor: "pointer",
+          fontSize: "18px",
+          fontWeight: "bold",
         }}
       >
+        ⋮
+      </button>
 
+      {/* DROPDOWN */}
+      {menuOpen && (
         <div
           style={{
-            width: "100%",
-            maxWidth:
-              "760px"
+            position: "absolute",
+            right: 0,
+            top: "52px",
+            background: colors.white,
+            border: `1px solid ${colors.border}`,
+            borderRadius: "12px",
+            width: "180px",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
+            overflow: "hidden",
+            zIndex: 20,
           }}
         >
-
-
-
           <div
+            onClick={() => {
+              setActiveTab("current");
+              setMenuOpen(false);
+            }}
             style={{
-              display: "flex",
-              gap: "12px",
-              marginBottom: "30px"
+              padding: "12px",
+              cursor: "pointer",
+              background:
+                activeTab === "current"
+                  ? colors.background
+                  : "transparent",
             }}
           >
-
-            <button
-              onClick={() =>
-                setActiveTab("current")
-              }
-              style={{
-                padding: "12px 24px",
-                border: "none",
-                borderRadius: "10px",
-                cursor: "pointer",
-                backgroundColor:
-                  activeTab === "current"
-                    ? colors.primary
-                    : colors.white,
-                color:
-                  activeTab === "current"
-                    ? "white"
-                    : colors.textDark
-              }}
-            >
-              Current Books ({books.length})
-            </button>
-
-            <button
-              onClick={() =>
-                setActiveTab("history")
-              }
-              style={{
-                padding: "12px 24px",
-                border: "none",
-                borderRadius: "10px",
-                cursor: "pointer",
-                backgroundColor:
-                  activeTab === "history"
-                    ? colors.primary
-                    : colors.white,
-                color:
-                  activeTab === "history"
-                    ? "white"
-                    : colors.textDark
-              }}
-            >
-              Borrow History ({history.length})
-            </button>
-
+            📚 Current Books
           </div>
 
+          <div
+            onClick={() => {
+              setActiveTab("history");
+              setMenuOpen(false);
+            }}
+            style={{
+              padding: "12px",
+              cursor: "pointer",
+              background:
+                activeTab === "history"
+                  ? colors.background
+                  : "transparent",
+            }}
+          >
+            🕘 History
+          </div>
         </div>
-
-      </div>
-      {activeTab === "current" &&
-        filteredBooks.length > 0 && (
-          <>
-            <InputField
-              placeholder="Search my borrowed books..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              style={{
-                width: "80%",
-                maxWidth: "320px",
-                padding: "12px 16px",
-                borderRadius: "4px",
-                border: `1px solid ${colors.secondary}`,
-                outline: "none",
-                fontSize: "14px",
-                backgroundColor: colors.white,
-
-              }}
-            />
-
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns:
-                  "repeat(auto-fill, minmax(320px, 320px))",
-                gap: "28px",
-                justifyContent: "start",
-                marginBottom: "60px",
-              }}
-            >
-              {filteredBooks.map((borrow) => (
-                <BookCard
-                  key={borrow._id}
-                  book={{
-                    ...borrow.book,
-                    dueDate: borrow.dueDate,
-                    borrowDate: borrow.borrowDate,
-                  }}
-                  buttonText="Return Book"
-                  buttonColor={colors.primary}
-                  showButton={true}
-                  showCopies={false}
-                  onClick={handleReturn}
-                />
-              ))}
-            </div>
-          </>
-        )}
-
-
-
-      {activeTab === "current" &&
-        filteredBooks.length === 0 && (
-          <><InputField
-            placeholder="Search my borrowed books..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            style={{
-              width: "80%",
-              maxWidth: "320px",
-              padding: "12px 16px",
-              borderRadius: "4px",
-              border: `1px solid ${colors.secondary}`,
-              outline: "none",
-              fontSize: "14px",
-              backgroundColor: colors.white,
-
-            }}
-          />
-            <div
-              style={{
-                backgroundColor:
-                  colors.white,
-
-                border:
-                  `1px solid ${colors.border}`,
-
-                padding:
-                  "40px",
-
-                borderRadius:
-                  "20px",
-
-                textAlign:
-                  "center"
-              }}
-            >
-
-              <h2>
-                No Borrowed Books
-              </h2>
-
-              <p>
-                Borrow books from the library to see them here.
-              </p>
-
-            </div>
-
-          </>)}
-
-      {activeTab === "history" && (
-
-        history.length === 0 ? (
-
-          <div
-            style={{
-              backgroundColor: colors.white,
-              border: `1px solid ${colors.border}`,
-              padding: "40px",
-              borderRadius: "20px",
-              textAlign: "center"
-            }}
-          >
-            <h2>No History Found</h2>
-
-            <p>
-              Returned books will appear here.
-            </p>
-          </div>
-
-        ) : (
-
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns:
-                "repeat(auto-fill, minmax(340px, 1fr))",
-              gap: "24px"
-            }}
-          >
-
-            {history.map((record) => (
-
-              <div
-                key={record._id}
-                style={{
-                  background: colors.white,
-                  border: `1px solid ${colors.border}`,
-                  borderRadius: "20px",
-                  padding: "24px",
-                  boxShadow:
-                    "0 6px 18px rgba(0,0,0,0.05)"
-                }}
-              >
-
-                <div
-                  style={{
-                    fontSize: "30px",
-                    marginBottom: "12px"
-                  }}
-                >
-                  📚
-                </div>
-
-                <h3
-                  style={{
-                    marginBottom: "16px",
-                    color: colors.textDark
-                  }}
-                >
-                  {record.book?.title}
-                </h3>
-
-                <p>
-                  <strong>Author:</strong>{" "}
-                  {record.book?.author}
-                </p>
-
-                <p>
-                  <strong>Borrowed:</strong>{" "}
-                  {new Date(
-                    record.borrowDate
-                  ).toLocaleDateString()}
-                </p>
-
-                <p>
-                  <strong>Returned:</strong>{" "}
-                  {record.returnDate
-                    ? new Date(
-                      record.returnDate
-                    ).toLocaleDateString()
-                    : "Not Returned"}
-                </p>
-
-              </div>
-
-            ))}
-
-          </div>
-
-        )
-
       )}
-    </PageContainer>
+    </div>
+  </div>
+
+  {/* ================= CONTENT ================= */}
+  <div>
+    {activeTab === "current" && (
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns:
+            "repeat(auto-fill, minmax(280px, 1fr))",
+          gap: "20px",
+        }}
+      >
+        {books.map((borrow) => (
+          <BookCard
+            key={borrow._id}
+            book={borrow.book}
+            buttonText="Return Book"
+            buttonColor={colors.primary}
+            showButton={true}
+            onClick={() => handleReturn(borrow.book._id)}
+          />
+        ))}
+      </div>
+    )}
+
+    {activeTab === "history" && (
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns:
+            "repeat(auto-fill, minmax(280px, 1fr))",
+          gap: "20px",
+        }}
+      >
+        {history.map((record) => (
+          <div
+            key={record._id}
+            style={{
+              background: colors.white,
+              border: `1px solid ${colors.border}`,
+              borderRadius: "16px",
+              padding: "18px",
+            }}
+          >
+            <div style={{ fontSize: "24px" }}>📚</div>
+
+            <h3 style={{ margin: "8px 0", color: colors.textDark }}>
+              {record.book?.title}
+            </h3>
+
+            <p style={{ color: colors.textLight }}>
+              {record.book?.author}
+            </p>
+
+            <div
+              style={{
+                marginTop: "10px",
+                fontSize: "14px",
+                color: colors.textLight,
+                display: "flex",
+                flexDirection: "column",
+                gap: "4px",
+              }}
+            >
+              <span>
+                Borrowed:{" "}
+                {new Date(record.borrowDate).toLocaleDateString()}
+              </span>
+
+              <span>
+                Returned:{" "}
+                {record.returnDate
+                  ? new Date(record.returnDate).toLocaleDateString()
+                  : "Not Returned"}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+
+</PageContainer>
   );
 };
 
-export default MyBooks;sd
+export default MyBooks;

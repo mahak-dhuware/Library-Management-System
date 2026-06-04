@@ -54,6 +54,9 @@ const AdminDashboard = () => {
     const [records, setRecords] =
         useState([]);
 
+    const [activeSection, setActiveSection] =
+        useState("addBook");
+
     const [overdueBooks,
         setOverdueBooks] =
         useState([]);
@@ -69,12 +72,12 @@ const AdminDashboard = () => {
         overdueBooks.length;
 
     const [stats, setStats] =
-    useState({
-        totalBooks: 0,
-        borrowedBooks: 0,
-        returnedBooks: 0,
-        overdueBooks: 0
-    });
+        useState({
+            totalBooks: 0,
+            borrowedBooks: 0,
+            returnedBooks: 0,
+            overdueBooks: 0
+        });
 
 
     const currentUser =
@@ -214,433 +217,949 @@ const AdminDashboard = () => {
     return (
 
         <PageContainer>
+            <>
+                <PageHeader
+                    title="Admin Dashboard"
+                    subtitle="Manage books and monitor library inventory."
+                />
 
-            <PageHeader
-                title="Admin Dashboard"
-
-                subtitle="Manage books and monitor library inventory."
-            />
-            <div
-                style={{
-                    display: "grid",
-                    gridTemplateColumns:
-                        "repeat(3, 1fr)",
-                    gap: "20px",
-                    marginBottom: "40px"
-                }}
-            >
-
+                {/* Stats */}
                 <div
-                    style={{
-                        background: "#fff",
-                        padding: "24px",
-                        borderRadius: "20px",
-                        border: "1px solid #E2E8F0"
-                    }}
-                >
-                    <h3>Total Books</h3>
-                    <h1>{totalBooks}</h1>
-                </div>
-
-                <div
-                    style={{
-                        background: "#fff",
-                        padding: "24px",
-                        borderRadius: "20px",
-                        border: "1px solid #E2E8F0"
-                    }}
-                >
-                    <h3>Active Borrows</h3>
-                    <h1>{activeBorrows}</h1>
-                </div>
-
-                <div
-                    style={{
-                        background: "#fff",
-                        padding: "24px",
-                        borderRadius: "20px",
-                        border: "1px solid #E2E8F0"
-                    }}
-                >
-                    <h3>Overdue Books</h3>
-                    <h1>{overdueCount}</h1>
-                </div>
-
-            </div>
-            <div
-    style={{
-        display: "grid",
-        gridTemplateColumns:
-            "repeat(auto-fit, minmax(220px, 1fr))",
-        gap: "20px",
-        marginBottom: "35px"
-    }}
->
-
-    <div className="stat-card">
-        <h3>Total Books</h3>
-        <h1>{stats.totalBooks}</h1>
-    </div>
-
-    <div className="stat-card">
-        <h3>Borrowed Books</h3>
-        <h1>{stats.borrowedBooks}</h1>
-    </div>
-
-    <div className="stat-card">
-        <h3>Returned Books</h3>
-        <h1>{stats.returnedBooks}</h1>
-    </div>
-
-    <div className="stat-card">
-        <h3>Overdue Books</h3>
-        <h1>{stats.overdueBooks}</h1>
-    </div>
-
-</div>
-
-            {/* FORM */}
-
-            <div
-                style={{
-                    backgroundColor:
-                        colors.white,
-
-                    border:
-                        `1px solid ${colors.secondary}`,
-
-                    borderRadius:
-                        "24px",
-
-                    padding: "32px",
-
-                    marginBottom:
-                        "40px",
-
-                    boxShadow:
-                        "0 8px 24px rgba(15,118,110,0.05)"
-                }}
-            >
-
-                <h2
-                    style={{
-                        marginBottom:
-                            "24px",
-
-                        color:
-                            colors.textDark
-                    }}
-                >
-                    Add New Book
-                </h2>
-
-                <form
-                    onSubmit={
-                        handleAddBook
-                    }
                     style={{
                         display: "grid",
-
                         gridTemplateColumns:
-                            "repeat(auto-fit, minmax(250px, 1fr))",
-
-                        gap: "18px"
+                            "repeat(auto-fit, minmax(220px, 1fr))",
+                        gap: "20px",
+                        marginBottom: "35px",
                     }}
                 >
+                    <div
+                        style={{
+                            minHeight: "130px",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            background: "#fff",
+                            padding: "24px",
+                            borderRadius: "20px",
+                            border: "1px solid #E2E8F0",
+                            textAlign: "center",
+                        }}
+                    >
+                        <h3>Total Books</h3>
+                        <h1>{totalBooks}</h1>
+                    </div>
 
-                    <InputField
-                        placeholder="Book Title"
+                    <div
+                        style={{
+                            minHeight: "130px",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            background: "#fff",
+                            padding: "24px",
+                            borderRadius: "20px",
+                            border: "1px solid #E2E8F0",
+                            textAlign: "center",
+                        }}
+                    >
+                        <h3>Active Borrows</h3>
+                        <h1>{activeBorrows}</h1>
+                    </div>
 
-                        value={title}
 
-                        onChange={(e) =>
-                            setTitle(
-                                e.target.value
-                            )
-                        }
-                    />
-
-                    <InputField
-                        placeholder="Author"
-
-                        value={author}
-
-                        onChange={(e) =>
-                            setAuthor(
-                                e.target.value
-                            )
-                        }
-                    />
-
-                    <InputField
-                        placeholder="Genre"
-
-                        value={genre}
-
-                        onChange={(e) =>
-                            setGenre(
-                                e.target.value
-                            )
-                        }
-                    />
-
-                    <InputField
-                        type="number"
-
-                        placeholder="Total Copies"
-
-                        value={
-                            totalCopies
-                        }
-
-                        onChange={(e) =>
-                            setTotalCopies(
-                                e.target.value
-                            )
-                        }
-                    />
-
-                    <InputField
-                        type="number"
-
-                        placeholder="Available Copies"
-
-                        value={
-                            availableCopies
-                        }
-
-                        onChange={(e) =>
-                            setAvailableCopies(
-                                e.target.value
-                            )
-                        }
-                    />
-
-                    <PrimaryButton
-                        text="Add Book"
-
-                        type="submit"
-                    />
-
-                </form>
-
-            </div>
-
-            {/* BOOKS */}
-
-            <div>
-
-                <div style={{ display: "flex", flexDirection: "column", gap: "18px", marginBottom: "24px" }}>
-                    <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: "16px" }}>
-                        <h2
-                            style={{
-                                margin: 0,
-                                color:
-                                    colors.textDark
-                            }}
-                        >
-                            Library Books
-                        </h2>
-                        <div style={{ width: "100%", maxWidth: "360px" }}>
-                            <InputField
-                                placeholder="Search library books..."
-                                value={search}
-                                onChange={(e) => setSearch(e.target.value)}
-                            />
-                        </div>
+                    <div
+                        style={{
+                            minHeight: "130px",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            background: "#fff",
+                            padding: "24px",
+                            borderRadius: "20px",
+                            border: "1px solid #E2E8F0",
+                            textAlign: "center",
+                        }}
+                    >
+                        <h3>Overdue Books</h3>
+                        <h1>{overdueCount}</h1>
                     </div>
                 </div>
 
-                {filteredBooks.length === 0 ? (
-                    <div
-                        style={{
-                            backgroundColor:
-                                colors.white,
-                            border:
-                                `1px solid ${colors.secondary}`,
-                            borderRadius:
-                                "20px",
-                            padding:
-                                "40px",
-                            textAlign:
-                                "center",
-                            color:
-                                colors.textLight
-                        }}
-                    >
-                        <div
-                            style={{
-                                fontSize:
-                                    "32px",
-                                marginBottom:
-                                    "16px"
-                            }}>
-                            🔎
-                        </div>
-                        <h2
-                            style={{
-                                marginBottom:
-                                    "10px",
-                                color:
-                                    colors.textDark
-                            }}>
-                            No library books found
-                        </h2>
-                        <p>
-                            Update your search
-                            term to see more
-                            results.
-                        </p>
-                    </div>
-                ) : (
-                    <div
-                        style={{
-                            display: "grid",
-                            gridTemplateColumns:
-                                "repeat(auto-fill, minmax(320px, 320px))",
-                            gap: "28px",
-                            justifyContent:
-                                "start"
-                        }}
-                    >
-                        {filteredBooks.map((book) => (
-                            <BookCard
-                                key={book._id}
-                                book={book}
-                                buttonText="Delete Book"
-
-                                buttonColor={
-                                    colors.danger
-                                }
-
-                                showButton={
-                                    book.createdBy &&
-                                    book
-                                        .createdBy
-                                        ._id ===
-                                    currentUser?.id
-                                }
-
-                                onClick={
-                                    handleDelete
-                                }
-                            />
-                        ))}
-                    </div>
-                )}
-
-            </div>
-
-            <h2
-                style={{
-                    marginTop: "50px"
-                }}
-            >
-                Borrow Records
-            </h2>
-
-            {records.map((record) => (
-
+                {/* Add Book + Insights */}
                 <div
-                    key={record._id}
                     style={{
-                        border: "1px solid #ddd",
-                        padding: "12px",
-                        marginBottom: "12px"
+                        display: "grid",
+                        gridTemplateColumns: "280px 1fr",
+                        gap: "24px",
+                        alignItems: "stretch",
                     }}
                 >
 
-                    <p>
-                        User:
-                        {record.user?.name}
-                    </p>
-
-                    <p>
-                        Book:
-                        {record.book?.title}
-                    </p>
-
-                    <p>
-                        Borrowed:
-                        {new Date(
-                            record.borrowDate
-                        ).toLocaleDateString()}
-                    </p>
-
-                    <p>
-                        Due:
-                        {new Date(
-                            record.dueDate
-                        ).toLocaleDateString()}
-                    </p>
-
-                    <p>
-                        Status:
-                        {record.returned
-                            ? "Returned"
-                            : "Active"}
-                    </p>
-
-                </div>
-
-            ))}
-
-            <h2
-                style={{
-                    marginTop: "50px"
-                }}
-            >
-                Overdue Books
-            </h2>
-            {overdueBooks.length === 0 ? (
-
-                <p>
-                    No overdue books
-                </p>
-
-            ) : (
-
-                overdueBooks.map(
-                    (record) => (
-
-                        <div
-                            key={record._id}
+                    <div
+                        style={{
+                            background: "#fff",
+                            border: "1px solid #E2E8F0",
+                            borderRadius: "24px",
+                            padding: "24px",
+                            position: "sticky",
+                            top: "20px",
+                            alignSelf: "stretch",
+                        }}
+                    >
+                        <h2
                             style={{
-                                border:
-                                    "1px solid red",
-
-                                padding:
-                                    "12px",
-
-                                marginBottom:
-                                    "12px"
+                                marginTop: 0,
+                                marginBottom: "24px",
+                                color: colors.textDark,
                             }}
                         >
+                            Quick Access
+                        </h2>
 
-                            <p>
-                                User:
-                                {record.user?.name}
-                            </p>
+                        <button
+                            onClick={() =>
+                                setActiveSection("addBook")
+                            }
+                            style={{
+                                padding: "18px",
+                                borderRadius: "10px",
+                                border: activeSection === "addBook"
+                                    ? `2px solid ${colors.primary}`
+                                    : "1px solid #E2E8F0",
+                                background:
+                                    activeSection === "addBook"
+                                        ? "#F0FDFA"
+                                        : "#F8FAFC",
+                                cursor: "pointer",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "12px",
+                                fontSize: "15px",
+                                fontWeight: "600",
+                                width: "100%",
+                            }}
+                        >
+                            <span style={{ fontSize: "22px" }}>
+                                ➕
+                            </span>
+                            Add New Book
+                        </button>
+                        <br />
 
-                            <p>
-                                Book:
-                                {record.book?.title}
-                            </p>
+                        <button
+                            onClick={() =>
+                                setActiveSection("books")
+                            }
+                            style={{
+                                padding: "18px",
+                                borderRadius: "10px",
+                                border: activeSection === "books"
+                                    ? `2px solid ${colors.primary}`
+                                    : "1px solid #E2E8F0",
+                                background:
+                                    activeSection === "books"
+                                        ? "#F0FDFA"
+                                        : "#F8FAFC",
+                                cursor: "pointer",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "12px",
+                                fontSize: "15px",
+                                fontWeight: "600",
+                                transition: "0.2s",
+                                width: "100%",
+                            }}
+                        >
+                            <span style={{ fontSize: "22px" }}>
+                                📚
+                            </span>
+                            Library Books
+                        </button>
+                        <br />
 
-                            <p>
-                                Due Date:
-                                {new Date(
-                                    record.dueDate
-                                ).toLocaleDateString()}
-                            </p>
+                        <button
+                            onClick={() =>
+                                setActiveSection("records")
+                            }
+                            style={{
+                                padding: "18px",
+                                borderRadius: "10px",
+                                border: activeSection === "records"
+                                    ? `2px solid ${colors.primary}`
+                                    : "1px solid #E2E8F0",
+                                background:
+                                    activeSection === "records"
+                                        ? "#F0FDFA"
+                                        : "#F8FAFC",
+                                cursor: "pointer",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "12px",
+                                fontSize: "15px",
+                                fontWeight: "600",
+                                transition: "0.2s",
+                                width: "100%",
+                            }}
+                        >
+                            <span style={{ fontSize: "22px" }}>
+                                📖
+                            </span>
+                            Borrow Records
+                        </button>
+                        <br />
 
-                        </div>
+                        <button
+                            onClick={() =>
+                                setActiveSection("overdue")
+                            }
+                            style={{
+                                padding: "18px",
+                                borderRadius: "10px",
+                                border: activeSection === "overdue"
+                                    ? `2px solid ${colors.primary}`
+                                    : "1px solid #E2E8F0",
+                                background:
+                                    activeSection === "overdue"
+                                        ? "#F0FDFA"
+                                        : "#F8FAFC",
+                                cursor: "pointer",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "12px",
+                                fontSize: "15px",
+                                fontWeight: "600",
+                                transition: "0.2s",
+                                width: "100%",
+                            }}
+                        >
+                            <span style={{ fontSize: "22px" }}>
+                                ⚠️
+                            </span>
+                            Overdue Books
+                        </button>
+                        <br />
 
-                    )
-                )
+                       
+                    </div>
 
-            )}
-        </PageContainer>
+
+
+                    <div
+                        style={{
+                            background: "#fff",
+                            border: "1px solid #E2E8F0",
+                            borderRadius: "24px",
+                            padding: "28px",
+                            minHeight: "600px",
+                        }}
+                    >
+                        {activeSection && (
+                            <div
+
+                            >
+
+                                {activeSection === "addBook" && (
+                                    <>
+                                        {/* Header */}
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                                justifyContent: "space-between",
+                                                alignItems: "center",
+                                                marginBottom: "32px",
+                                                flexWrap: "wrap",
+                                                gap: "12px",
+                                            }}
+                                        >
+                                            <div>
+                                                <h2
+                                                    style={{
+                                                        margin: 0,
+                                                        fontSize: "28px",
+                                                        fontWeight: "700",
+                                                        color: colors.textDark,
+                                                    }}
+                                                >
+                                                    ➕ Add New Book
+                                                </h2>
+
+                                                <p
+                                                    style={{
+                                                        margin: "6px 0 0",
+                                                        color: "#64748B",
+                                                    }}
+                                                >
+                                                    Add a new book to your library collection.
+                                                </p>
+                                            </div>
+
+                                            <div
+                                                style={{
+                                                    background: "#F0FDFA",
+                                                    color: colors.primary,
+                                                    padding: "10px 16px",
+                                                    borderRadius: "999px",
+                                                    fontWeight: "600",
+                                                    border: `1px solid ${colors.secondary}`,
+                                                }}
+                                            >
+                                                Library Management
+                                            </div>
+                                        </div>
+
+                                        {/* Form Card */}
+                                        <div
+                                            style={{
+                                                background: "#F8FAFC",
+                                                border: "1px solid #E2E8F0",
+                                                borderRadius: "20px",
+                                                padding: "28px",
+                                            }}
+                                        >
+                                            <form
+                                                onSubmit={handleAddBook}
+                                                style={{
+                                                    display: "grid",
+                                                    gridTemplateColumns:
+                                                        "repeat(auto-fit, minmax(260px, 1fr))",
+                                                    gap: "20px",
+                                                }}
+                                            >
+                                                <div>
+                                                    <label
+                                                        style={{
+                                                            display: "block",
+                                                            marginBottom: "8px",
+                                                            fontWeight: "600",
+                                                        }}
+                                                    >
+                                                        Book Title
+                                                    </label>
+
+                                                    <InputField
+                                                        placeholder="Enter book title"
+                                                        value={title}
+                                                        onChange={(e) =>
+                                                            setTitle(e.target.value)
+                                                        }
+                                                    />
+                                                </div>
+
+                                                <div>
+                                                    <label
+                                                        style={{
+                                                            display: "block",
+                                                            marginBottom: "8px",
+                                                            fontWeight: "600",
+                                                        }}
+                                                    >
+                                                        Author
+                                                    </label>
+
+                                                    <InputField
+                                                        placeholder="Author name"
+                                                        value={author}
+                                                        onChange={(e) =>
+                                                            setAuthor(e.target.value)
+                                                        }
+                                                    />
+                                                </div>
+
+                                                <div>
+                                                    <label
+                                                        style={{
+                                                            display: "block",
+                                                            marginBottom: "8px",
+                                                            fontWeight: "600",
+                                                        }}
+                                                    >
+                                                        Genre
+                                                    </label>
+
+                                                    <InputField
+                                                        placeholder="e.g. Fiction"
+                                                        value={genre}
+                                                        onChange={(e) =>
+                                                            setGenre(e.target.value)
+                                                        }
+                                                    />
+                                                </div>
+
+                                                <div>
+                                                    <label
+                                                        style={{
+                                                            display: "block",
+                                                            marginBottom: "8px",
+                                                            fontWeight: "600",
+                                                        }}
+                                                    >
+                                                        Total Copies
+                                                    </label>
+
+                                                    <InputField
+                                                        type="number"
+                                                        placeholder="Total copies"
+                                                        value={totalCopies}
+                                                        onChange={(e) =>
+                                                            setTotalCopies(e.target.value)
+                                                        }
+                                                    />
+                                                </div>
+
+                                                <div>
+                                                    <label
+                                                        style={{
+                                                            display: "block",
+                                                            marginBottom: "8px",
+                                                            fontWeight: "600",
+                                                        }}
+                                                    >
+                                                        Available Copies
+                                                    </label>
+
+                                                    <InputField
+                                                        type="number"
+                                                        placeholder="Available copies"
+                                                        value={availableCopies}
+                                                        onChange={(e) =>
+                                                            setAvailableCopies(e.target.value)
+                                                        }
+                                                    />
+                                                </div>
+
+                                                <div
+                                                    style={{
+                                                        display: "flex",
+                                                        alignItems: "flex-end",
+                                                    }}
+                                                >
+                                                    <PrimaryButton
+                                                        text="📚 Add Book"
+                                                        type="submit"
+                                                    />
+                                                </div>
+                                            </form>
+
+                                            <div
+                                                style={{
+                                                    marginTop: "24px",
+                                                    padding: "16px",
+                                                    background: "#FFFFFF",
+                                                    borderRadius: "12px",
+                                                    border: "1px solid #E2E8F0",
+                                                    color: "#64748B",
+                                                    fontSize: "14px",
+                                                }}
+                                            >
+                                                💡 Ensure the available copies do not exceed the total copies.
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
+                                {activeSection === "books" && (
+                                    <>
+                                        {/* Header */}
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                                justifyContent: "space-between",
+                                                alignItems: "center",
+                                                flexWrap: "wrap",
+                                                gap: "20px",
+                                                marginBottom: "28px",
+                                                paddingBottom: "18px",
+                                                borderBottom: "1px solid #E2E8F0",
+                                            }}
+                                        >
+                                            <div>
+                                                <h2
+                                                    style={{
+                                                        margin: 0,
+                                                        color: colors.textDark,
+                                                    }}
+                                                >
+                                                    📚 Library Books
+                                                </h2>
+
+                                                <p
+                                                    style={{
+                                                        margin: "6px 0 0",
+                                                        color: "#64748B",
+                                                        fontSize: "14px",
+                                                    }}
+                                                >
+                                                    Browse and manage all books available in the library.
+                                                </p>
+                                            </div>
+
+                                            <div
+                                                style={{
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    gap: "16px",
+                                                }}
+                                            >
+                                                <div
+                                                    style={{
+                                                        background: "#F1F5F9",
+                                                        padding: "8px 14px",
+                                                        borderRadius: "999px",
+                                                        fontWeight: "600",
+                                                        fontSize: "14px",
+                                                        color: colors.textDark,
+                                                    }}
+                                                >
+                                                    {filteredBooks.length} Books
+                                                </div>
+
+                                                <div style={{ width: "320px" }}>
+                                                    <InputField
+                                                        placeholder="🔍 Search books..."
+                                                        value={search}
+                                                        onChange={(e) =>
+                                                            setSearch(e.target.value)
+                                                        }
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Empty State */}
+                                        {filteredBooks.length === 0 ? (
+                                            <div
+                                                style={{
+                                                    textAlign: "center",
+                                                    padding: "80px 20px",
+                                                    color: "#64748B",
+                                                }}
+                                            >
+                                                <div
+                                                    style={{
+                                                        fontSize: "48px",
+                                                        marginBottom: "12px",
+                                                    }}
+                                                >
+                                                    📚
+                                                </div>
+
+                                                <h3
+                                                    style={{
+                                                        margin: "0 0 8px",
+                                                    }}
+                                                >
+                                                    No Books Found
+                                                </h3>
+
+                                                <p
+                                                    style={{
+                                                        margin: 0,
+                                                    }}
+                                                >
+                                                    Try changing your search term.
+                                                </p>
+                                            </div>
+                                        ) : (
+                                            <div
+                                                style={{
+                                                    display: "grid",
+                                                    gridTemplateColumns:
+                                                        "repeat(auto-fill,minmax(320px,1fr))",
+                                                    gap: "28px",
+                                                }}
+                                            >
+                                                {filteredBooks.map((book) => (
+                                                    <BookCard
+                                                        key={book._id}
+                                                        book={book}
+                                                        buttonText="Delete Book"
+                                                        buttonColor={colors.danger}
+                                                        showButton={
+                                                            book.createdBy &&
+                                                            book.createdBy._id ===
+                                                            currentUser?.id
+                                                        }
+                                                        onClick={handleDelete}
+                                                    />
+                                                ))}
+                                            </div>
+                                        )}
+                                    </>
+                                )}
+
+                                {activeSection === "records" && (
+                                    <>
+                                        {/* Header */}
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                                justifyContent: "space-between",
+                                                alignItems: "center",
+                                                flexWrap: "wrap",
+                                                gap: "20px",
+                                                marginBottom: "28px",
+                                                paddingBottom: "18px",
+                                                borderBottom: "1px solid #E2E8F0",
+                                            }}
+                                        >
+                                            <div>
+                                                <h2
+                                                    style={{
+                                                        margin: 0,
+                                                        color: colors.textDark,
+                                                    }}
+                                                >
+                                                    📖 Borrow Records
+                                                </h2>
+
+                                                <p
+                                                    style={{
+                                                        margin: "6px 0 0",
+                                                        color: "#64748B",
+                                                        fontSize: "14px",
+                                                    }}
+                                                >
+                                                    Track all book borrowing activities.
+                                                </p>
+                                            </div>
+
+                                            <div
+                                                style={{
+                                                    background: "#F1F5F9",
+                                                    padding: "8px 14px",
+                                                    borderRadius: "999px",
+                                                    fontWeight: "600",
+                                                    fontSize: "14px",
+                                                }}
+                                            >
+                                                {records.length} Records
+                                            </div>
+                                        </div>
+
+                                        {/* Empty State */}
+                                        {records.length === 0 ? (
+                                            <div
+                                                style={{
+                                                    textAlign: "center",
+                                                    padding: "80px 20px",
+                                                    color: "#64748B",
+                                                }}
+                                            >
+                                                <div
+                                                    style={{
+                                                        fontSize: "48px",
+                                                        marginBottom: "12px",
+                                                    }}
+                                                >
+                                                    📖
+                                                </div>
+
+                                                <h3>No Borrow Records</h3>
+
+                                                <p>
+                                                    Borrow activity will appear here.
+                                                </p>
+                                            </div>
+                                        ) : (
+                                            <div
+                                                style={{
+                                                    display: "grid",
+                                                    gridTemplateColumns:
+                                                        "repeat(auto-fill, minmax(340px, 1fr))",
+                                                    gap: "20px",
+                                                }}
+                                            >
+                                                {records.map((record) => (
+                                                    <div
+                                                        key={record._id}
+                                                        style={{
+                                                            background: "#fff",
+                                                            border: "1px solid #E2E8F0",
+                                                            borderRadius: "18px",
+                                                            padding: "22px",
+                                                            boxShadow:
+                                                                "0 4px 12px rgba(0,0,0,0.04)",
+                                                        }}
+                                                    >
+                                                        <div
+                                                            style={{
+                                                                display: "flex",
+                                                                justifyContent: "space-between",
+                                                                alignItems: "center",
+                                                                marginBottom: "16px",
+                                                            }}
+                                                        >
+                                                            <h3
+                                                                style={{
+                                                                    margin: 0,
+                                                                    fontSize: "17px",
+                                                                }}
+                                                            >
+                                                                📚 {record.book?.title}
+                                                            </h3>
+
+                                                            <span
+                                                                style={{
+                                                                    padding: "6px 12px",
+                                                                    borderRadius: "999px",
+                                                                    fontSize: "13px",
+                                                                    fontWeight: "600",
+                                                                    background:
+                                                                        record.returned
+                                                                            ? "#DCFCE7"
+                                                                            : "#FEF3C7",
+                                                                    color:
+                                                                        record.returned
+                                                                            ? "#166534"
+                                                                            : "#92400E",
+                                                                }}
+                                                            >
+                                                                {record.returned
+                                                                    ? "Returned"
+                                                                    : "Active"}
+                                                            </span>
+                                                        </div>
+
+                                                        <div
+                                                            style={{
+                                                                display: "flex",
+                                                                flexDirection: "column",
+                                                                gap: "10px",
+                                                                color: "#475569",
+                                                            }}
+                                                        >
+                                                            <div>
+                                                                <strong>👤 User:</strong>{" "}
+                                                                {record.user?.name}
+                                                            </div>
+
+                                                            <div>
+                                                                <strong>📅 Borrowed:</strong>{" "}
+                                                                {new Date(
+                                                                    record.borrowDate
+                                                                ).toLocaleDateString()}
+                                                            </div>
+
+                                                            <div>
+                                                                <strong>⏳ Due Date:</strong>{" "}
+                                                                {new Date(
+                                                                    record.dueDate
+                                                                ).toLocaleDateString()}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </>
+                                )}
+
+                                {activeSection === "overdue" && (
+                                    <>
+                                        {/* Header */}
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                                justifyContent: "space-between",
+                                                alignItems: "center",
+                                                marginBottom: "28px",
+                                                flexWrap: "wrap",
+                                                gap: "12px",
+                                            }}
+                                        >
+                                            <div>
+                                                <h2
+                                                    style={{
+                                                        margin: 0,
+                                                        fontSize: "28px",
+                                                        fontWeight: "700",
+                                                        color: "#DC2626",
+                                                    }}
+                                                >
+                                                    🚨 Overdue Books
+                                                </h2>
+
+                                                <p
+                                                    style={{
+                                                        margin: "6px 0 0",
+                                                        color: "#64748B",
+                                                    }}
+                                                >
+                                                    Books that have crossed their due date.
+                                                </p>
+                                            </div>
+
+                                            <div
+                                                style={{
+                                                    background: "#FEF2F2",
+                                                    color: "#DC2626",
+                                                    padding: "10px 16px",
+                                                    borderRadius: "999px",
+                                                    fontWeight: "600",
+                                                    border: "1px solid #FECACA",
+                                                }}
+                                            >
+                                                {overdueBooks.length} Overdue
+                                            </div>
+                                        </div>
+
+                                        {/* Empty State */}
+                                        {overdueBooks.length === 0 ? (
+                                            <div
+                                                style={{
+                                                    textAlign: "center",
+                                                    padding: "60px 20px",
+                                                    background: "#F8FAFC",
+                                                    borderRadius: "20px",
+                                                    border: "1px dashed #CBD5E1",
+                                                }}
+                                            >
+                                                <div style={{ fontSize: "48px" }}>
+                                                    ✅
+                                                </div>
+
+                                                <h3>No Overdue Books</h3>
+
+                                                <p
+                                                    style={{
+                                                        color: "#64748B",
+                                                    }}
+                                                >
+                                                    Great! All borrowed books are within the due date.
+                                                </p>
+                                            </div>
+                                        ) : (
+                                            <div
+                                                style={{
+                                                    display: "grid",
+                                                    gap: "18px",
+                                                }}
+                                            >
+                                                {overdueBooks.map((record) => (
+                                                    <div
+                                                        key={record._id}
+                                                        style={{
+                                                            background: "#FFFFFF",
+                                                            border: "1px solid #FECACA",
+                                                            borderLeft: "6px solid #DC2626",
+                                                            borderRadius: "18px",
+                                                            padding: "22px",
+                                                            boxShadow:
+                                                                "0 4px 12px rgba(220,38,38,0.08)",
+                                                        }}
+                                                    >
+                                                        <div
+                                                            style={{
+                                                                display: "flex",
+                                                                justifyContent: "space-between",
+                                                                alignItems: "center",
+                                                                flexWrap: "wrap",
+                                                                gap: "12px",
+                                                            }}
+                                                        >
+                                                            <div>
+                                                                <h3
+                                                                    style={{
+                                                                        margin: "0 0 8px",
+                                                                        color: "#0F172A",
+                                                                    }}
+                                                                >
+                                                                    {record.book?.title}
+                                                                </h3>
+
+                                                                <p
+                                                                    style={{
+                                                                        margin: 0,
+                                                                        color: "#64748B",
+                                                                    }}
+                                                                >
+                                                                    Borrowed by{" "}
+                                                                    <strong>
+                                                                        {record.user?.name}
+                                                                    </strong>
+                                                                </p>
+                                                            </div>
+
+                                                            <span
+                                                                style={{
+                                                                    background: "#FEF2F2",
+                                                                    color: "#DC2626",
+                                                                    padding: "8px 14px",
+                                                                    borderRadius: "999px",
+                                                                    fontSize: "13px",
+                                                                    fontWeight: "600",
+                                                                }}
+                                                            >
+                                                                Overdue
+                                                            </span>
+                                                        </div>
+
+                                                        <div
+                                                            style={{
+                                                                marginTop: "18px",
+                                                                display: "flex",
+                                                                gap: "30px",
+                                                                flexWrap: "wrap",
+                                                            }}
+                                                        >
+                                                            <div>
+                                                                <div
+                                                                    style={{
+                                                                        fontSize: "12px",
+                                                                        color: "#94A3B8",
+                                                                    }}
+                                                                >
+                                                                    DUE DATE
+                                                                </div>
+
+                                                                <div
+                                                                    style={{
+                                                                        fontWeight: "600",
+                                                                        color: "#DC2626",
+                                                                    }}
+                                                                >
+                                                                    {new Date(
+                                                                        record.dueDate
+                                                                    ).toLocaleDateString()}
+                                                                </div>
+                                                            </div>
+
+                                                            <div>
+                                                                <div
+                                                                    style={{
+                                                                        fontSize: "12px",
+                                                                        color: "#94A3B8",
+                                                                    }}
+                                                                >
+                                                                    BORROWER
+                                                                </div>
+
+                                                                <div
+                                                                    style={{
+                                                                        fontWeight: "600",
+                                                                    }}
+                                                                >
+                                                                    {record.user?.name}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    </>
+                                )}
+
+                            </div>
+
+
+                        )
+                        }</div></div>
+            </>
+        </PageContainer >
 
     );
 }

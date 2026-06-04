@@ -152,7 +152,7 @@ const BookCard = ({
             style={{
                 color:
                     book.availableCopies > 0
-                        ? colors.primary
+                        ? colors.green
                         : colors.danger,
 
                 fontWeight: "600",
@@ -172,6 +172,8 @@ const BookCard = ({
 
                 <PrimaryButton
                     text={buttonText}
+
+                    
 
                     onClick={() =>
                         onClick(book._id)

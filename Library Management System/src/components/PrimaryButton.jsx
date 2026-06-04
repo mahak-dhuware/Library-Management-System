@@ -31,7 +31,9 @@ const PrimaryButton = ({
 
                 fontSize: "15px",
 
-                cursor: "pointer"
+                cursor: "pointer",
+
+                marginTop: "20px"
             }}
         >
             {text}

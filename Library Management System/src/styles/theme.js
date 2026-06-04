@@ -1,22 +1,16 @@
 export const colors = {
-
-    green: "#39c01a",
-
-    border: "#E8D5B7",
-
-    primary: "#6F4C3E",
-
-    primaryLight: "#E8CBA0",
-
-    secondary: "#C2B280",
-
-    danger: "#ee2626",
+    green: "#2E7D32",        // updated success green
+    border: "#E2D3C0",
+    primary: "#7A523F",
+    primaryLight: "#A8836A", // optional derived lighter brown for hover states
+    secondary: "#C2B280",    // kept same (can adjust later if needed)
+    danger: "#f54747d1",
 
     white: "#ffffff",
+    background: "#F5EFE7",
 
-    background: "#D9B68D",
+    card: "#FFFFFF",         // NEW (added explicitly)
 
-    textDark: "#6F4C3E",
-
-    textLight: "#C2B280"
+    textDark: "#4B3428",
+    textLight: "#8C7A6B"     // softened neutral for subtitles
 };
