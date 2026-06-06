@@ -119,7 +119,7 @@ const Navbar = () => {
             )}
 
             {/* AUTH + Hamburger */}
-            <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginRight: "12px" }}>
                 {!token ? (
                     <>
                         <Link to="/login" style={{ textDecoration: "none", color: colors.primary, fontWeight: 600 }}>
@@ -141,25 +141,24 @@ const Navbar = () => {
                         onClick={() => setMenuOpen((s) => !s)}
                         aria-label="Toggle menu"
                         style={{
+                            // height: "30px",
                             background: "transparent",
                             border: "1px solid " + colors.secondary,
-                            padding: "8px",
-                            borderRadius: "8px",
+                            padding: "6px",
+                            borderRadius: "6px",
                             cursor: "pointer",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center"
+                            marginRight: "15px"
                         }}
                     >
-                        <div style={{ width: 18, height: 2, background: colors.textDark, marginBottom: 4 }} />
-                        <div style={{ width: 18, height: 2, background: colors.textDark, marginTop: 4 }} />
+                        <div style={{ width: 12, height: 2, background: colors.textDark, marginBottom: 4 }} />
+                        <div style={{ width: 12, height: 2, background: colors.textDark, marginTop: 4 }} />
                     </button>
                 )}
             </div>
 
             {/* Mobile menu overlay */}
             {isMobile && menuOpen && (
-                <div style={{ position: "absolute", top: 64, left: 12, right: 12, background: colors.white, border: `1px solid ${colors.secondary}`, borderRadius: 12, padding: 12, boxShadow: "0 8px 20px rgba(0,0,0,0.08)" }}>
+                <div style={{ position: "absolute", top: 64, left: 12, right: 12, background: colors.white, border: `1px solid ${colors.secondary}`, borderRadius: 12, padding: 12,marginRight: "30px", boxShadow: "0 8px 20px rgba(0,0,0,0.08)" }}>
                     <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                         {token && (
                             <Link to="/" style={{ ...linkStyle("/"), display: "block" }} onClick={() => setMenuOpen(false)}>
