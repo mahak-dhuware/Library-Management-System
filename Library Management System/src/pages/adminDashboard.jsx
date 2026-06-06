@@ -60,7 +60,12 @@ const AdminDashboard = () => {
     const [overdueBooks,
         setOverdueBooks] =
         useState([]);
+
+
     const totalBooks = books.length;
+
+    const isMobile = window.innerWidth < 768;
+    const isTablet = window.innerWidth < 992;
 
     const activeBorrows =
         records.filter(
@@ -228,7 +233,7 @@ const AdminDashboard = () => {
                     style={{
                         display: "grid",
                         gridTemplateColumns:
-                            "repeat(auto-fit, minmax(220px, 1fr))",
+                            "repeat(auto-fit, minmax(180px, 1fr))",
                         gap: "20px",
                         marginBottom: "35px",
                     }}
@@ -293,7 +298,10 @@ const AdminDashboard = () => {
                 <div
                     style={{
                         display: "grid",
-                        gridTemplateColumns: "280px 1fr",
+                        gridTemplateColumns:
+                            isTablet
+                                ? "1fr"
+                                : "280px minmax(0, 1fr)",
                         gap: "24px",
                         alignItems: "stretch",
                     }}
@@ -305,7 +313,7 @@ const AdminDashboard = () => {
                             border: "1px solid #E2E8F0",
                             borderRadius: "24px",
                             padding: "24px",
-                            position: "sticky",
+                            position: isTablet ? "static" : "sticky",
                             top: "20px",
                             alignSelf: "stretch",
                         }}
@@ -443,7 +451,7 @@ const AdminDashboard = () => {
                         </button>
                         <br />
 
-                       
+
                     </div>
 
 
@@ -453,7 +461,7 @@ const AdminDashboard = () => {
                             background: "#fff",
                             border: "1px solid #E2E8F0",
                             borderRadius: "24px",
-                            padding: "28px",
+                            padding: isMobile ? "18px" : "28px",
                             minHeight: "600px",
                         }}
                     >
@@ -663,46 +671,45 @@ const AdminDashboard = () => {
                                 {activeSection === "books" && (
                                     <>
                                         {/* Header */}
+                                        {/* Header */}
                                         <div
                                             style={{
-                                                display: "flex",
-                                                justifyContent: "space-between",
-                                                alignItems: "center",
-                                                flexWrap: "wrap",
-                                                gap: "20px",
                                                 marginBottom: "28px",
                                                 paddingBottom: "18px",
                                                 borderBottom: "1px solid #E2E8F0",
                                             }}
                                         >
-                                            <div>
-                                                <h2
-                                                    style={{
-                                                        margin: 0,
-                                                        color: colors.textDark,
-                                                    }}
-                                                >
-                                                    📚 Library Books
-                                                </h2>
-
-                                                <p
-                                                    style={{
-                                                        margin: "6px 0 0",
-                                                        color: "#64748B",
-                                                        fontSize: "14px",
-                                                    }}
-                                                >
-                                                    Browse and manage all books available in the library.
-                                                </p>
-                                            </div>
-
+                                            {/* Top Row */}
                                             <div
                                                 style={{
                                                     display: "flex",
-                                                    alignItems: "center",
+                                                    justifyContent: "space-between",
+                                                    alignItems: isMobile ? "flex-start" : "center",
                                                     gap: "16px",
+                                                    marginBottom: isMobile ? "16px" : "0",
                                                 }}
                                             >
+                                                <div style={{ flex: 1 }}>
+                                                    <h2
+                                                        style={{
+                                                            margin: 0,
+                                                            color: colors.textDark,
+                                                        }}
+                                                    >
+                                                        📚 Library Books
+                                                    </h2>
+
+                                                    <p
+                                                        style={{
+                                                            margin: "6px 0 0",
+                                                            color: "#64748B",
+                                                            fontSize: "14px",
+                                                        }}
+                                                    >
+                                                        Browse and manage all books available in the library.
+                                                    </p>
+                                                </div>
+
                                                 <div
                                                     style={{
                                                         background: "#F1F5F9",
@@ -710,21 +717,27 @@ const AdminDashboard = () => {
                                                         borderRadius: "999px",
                                                         fontWeight: "600",
                                                         fontSize: "14px",
-                                                        color: colors.textDark,
+                                                        whiteSpace: "nowrap",
+                                                        flexShrink: 0,
                                                     }}
                                                 >
                                                     {filteredBooks.length} Books
                                                 </div>
+                                            </div>
 
-                                                <div style={{ width: "320px" }}>
-                                                    <InputField
-                                                        placeholder="🔍 Search books..."
-                                                        value={search}
-                                                        onChange={(e) =>
-                                                            setSearch(e.target.value)
-                                                        }
-                                                    />
-                                                </div>
+                                            {/* Search Bar */}
+                                            <div
+                                                style={{
+                                                    width: "100%",
+                                                    marginTop: isMobile ? "0" : "16px",
+                                                    marginLeft: 0,
+                                                }}
+                                            >
+                                                <InputField
+                                                    placeholder="🔍 Search books..."
+                                                    value={search}
+                                                    onChange={(e) => setSearch(e.target.value)}
+                                                />
                                             </div>
                                         </div>
 
@@ -767,7 +780,7 @@ const AdminDashboard = () => {
                                                 style={{
                                                     display: "grid",
                                                     gridTemplateColumns:
-                                                        "repeat(auto-fill,minmax(320px,1fr))",
+                                                        "repeat(auto-fill,minmax(280px,1fr))",
                                                     gap: "28px",
                                                 }}
                                             >
@@ -868,7 +881,7 @@ const AdminDashboard = () => {
                                                 style={{
                                                     display: "grid",
                                                     gridTemplateColumns:
-                                                        "repeat(auto-fill, minmax(340px, 1fr))",
+                                                        "repeat(auto-fill, minmax(280px, 1fr))",
                                                     gap: "20px",
                                                 }}
                                             >
