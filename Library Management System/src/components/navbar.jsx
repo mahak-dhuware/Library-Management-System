@@ -98,42 +98,34 @@ const Navbar = () => {
 
             {/* LINKS (desktop) */}
             {!isMobile && (
-                <div style={{ display: "flex", alignItems: "center", gap: "10px", flex: 1, justifyContent: "center" }}>
-                    {token && (
-                        <Link to="/" style={linkStyle("/")} onClick={() => setMenuOpen(false)}>
-                            Books
-                        </Link>
-                    )}
-                    {token && (
-                        <Link to="/mybooks" style={linkStyle("/mybooks")} onClick={() => setMenuOpen(false)}>
-                            My Books
-                        </Link>
-                    )}
-                    
-                    {token && user?.role === "admin" && (
-                        <Link to="/admin" style={linkStyle("/admin")} onClick={() => setMenuOpen(false)}>
-                            Admin Dashboard
-                        </Link>
-                    )}
-                </div>
+                <>
+                    <div style={{ display: "flex", alignItems: "center", gap: "10px", flex: 1, justifyContent: "center" }}>
+                        {token && (
+                            <Link to="/" style={linkStyle("/")} onClick={() => setMenuOpen(false)}>
+                                Books
+                            </Link>
+                        )}
+                        {token && (
+                            <Link to="/mybooks" style={linkStyle("/mybooks")} onClick={() => setMenuOpen(false)}>
+                                My Books
+                            </Link>
+                        )}
+
+                        {token && user?.role === "admin" && (
+                            <Link to="/admin" style={linkStyle("/admin")} onClick={() => setMenuOpen(false)}>
+                                Admin Dashboard
+                            </Link>
+                        )}
+
+                    </div>
+                    <button onClick={handleLogout} style={{ backgroundColor: colors.danger, color: "#FFFFFF", border: "none", padding: "8px 14px", borderRadius: "10px", cursor: "pointer", fontWeight: 600, display: "block", marginRight: "45px" }}>
+                        Logout
+                    </button></>
             )}
 
             {/* AUTH + Hamburger */}
             <div style={{ display: "flex", alignItems: "center", gap: "12px", marginRight: "12px" }}>
-                {!token ? (
-                    <>
-                        <Link to="/login" style={{ textDecoration: "none", color: colors.primary, fontWeight: 600 }}>
-                            Login
-                        </Link>
-                        <Link to="/register" style={{ textDecoration: "none", backgroundColor: colors.primary, color: "#FFFFFF", padding: "8px 14px", borderRadius: "10px", fontWeight: 600 }}>
-                            Register
-                        </Link>
-                    </>
-                ) : (
-                    <button onClick={handleLogout} style={{ backgroundColor: colors.danger, color: "#FFFFFF", border: "none", padding: "8px 14px", borderRadius: "10px", cursor: "pointer", fontWeight: 600, marginRight: "45px" }}>
-                        Logout
-                    </button>
-                )}
+
 
                 {/* Hamburger for mobile */}
                 {isMobile && (
@@ -154,11 +146,12 @@ const Navbar = () => {
                         <div style={{ width: 12, height: 2, background: colors.textDark, marginTop: 4 }} />
                     </button>
                 )}
+
             </div>
 
             {/* Mobile menu overlay */}
             {isMobile && menuOpen && (
-                <div style={{ position: "absolute", top: 64, left: 12, right: 12, background: colors.white, border: `1px solid ${colors.secondary}`, borderRadius: 12, padding: 12,marginRight: "30px", boxShadow: "0 8px 20px rgba(0,0,0,0.08)" }}>
+                <div style={{ position: "absolute", top: 64, left: 12, right: 12, background: colors.white, border: `1px solid ${colors.secondary}`, borderRadius: 12, padding: 12, marginRight: "30px", boxShadow: "0 8px 20px rgba(0,0,0,0.08)" }}>
                     <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                         {token && (
                             <Link to="/" style={{ ...linkStyle("/"), display: "block" }} onClick={() => setMenuOpen(false)}>
@@ -175,6 +168,10 @@ const Navbar = () => {
                                 Admin Dasboard
                             </Link>
                         )}
+                        {token && (
+                            <button onClick={handleLogout} style={{ backgroundColor: colors.danger, color: "#FFFFFF", border: "none", padding: "8px 14px", borderRadius: "10px", cursor: "pointer", fontWeight: 600, display: "block" }}>
+                                Logout
+                            </button>)}
                     </div>
                 </div>
             )}
