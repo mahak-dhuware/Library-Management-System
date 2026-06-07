@@ -258,10 +258,16 @@ const MyBooks = () => {
                 .map((borrow) => (
                   <BookCard
                     key={borrow._id}
-                    book={borrow.book}
+                    book={{
+                      ...borrow.book,
+                      borrowDate: borrow.borrowDate,
+                      dueDate: borrow.dueDate,
+                    }}
                     buttonText="Return Book"
                     buttonColor={colors.primary}
                     showButton={true}
+                    showBorrowInfo={true}
+                    
                     onClick={() => handleReturn(borrow.book._id)}
                   />
                 ))}

@@ -8,26 +8,28 @@ const BookCard = ({
     buttonColor,
     onClick,
     showButton = true,
-    showCopies = true
-})  => {
- if (!book) return null;
+    showCopies = true,
+    showBorrowInfo = false,
+
+}) => {
+    if (!book) return null;
     return (
 
         <div
-    style={{
-        backgroundColor: colors.white,
-        border: `1px solid ${colors.border}`,
-        padding: "24px",
-        borderRadius: "0px",
-        // boxShadow: "0 4px 12px rgba(15,118,110,0.08)",
+            style={{
+                backgroundColor: colors.white,
+                border: `1px solid ${colors.border}`,
+                padding: "24px",
+                borderRadius: "0px",
+                // boxShadow: "0 4px 12px rgba(15,118,110,0.08)",
 
-        height: "75%",
-        minHeight: "360px",
+                height: showBorrowInfo ? "400px" : "75%",
+                minHeight: "360px",
 
-        display: "flex",
-        flexDirection: "column",
-    }}
->
+                display: "flex",
+                flexDirection: "column",
+            }}
+        >
 
             <div>
 
@@ -105,67 +107,67 @@ const BookCard = ({
                     </strong>{" "}
                     {book.genre}
                 </p>
-                {book.borrowDate && (
+                {showBorrowInfo && book.borrowDate && (
 
-    <p
-        style={{
-            color: colors.textLight,
-            marginBottom: "10px"
-        }}
-    >
-        <strong>
-            Borrowed:
-        </strong>{" "}
-        {new Date(
-            book.borrowDate
-        ).toLocaleDateString()}
-    </p>
+                    <p
+                        style={{
+                            color: colors.textLight,
+                            marginBottom: "10px"
+                        }}
+                    >
+                        <strong>
+                            Borrowed:
+                        </strong>{" "}
+                        {new Date(
+                            book.borrowDate
+                        ).toLocaleDateString()}
+                    </p>
 
-)}
+                )}
 
-{book.dueDate && (
+                {showBorrowInfo && book.dueDate && (
 
-    <p
-        style={{
-            color:
-                new Date(book.dueDate) < new Date()
-                    ? colors.danger
-                    : colors.primary,
+                    <p
+                        style={{
+                            color:
+                                new Date(book.dueDate) < new Date()
+                                    ? colors.danger
+                                    : colors.primary,
 
-            fontWeight: "600",
+                            fontWeight: "600",
 
-            marginBottom: "10px"
-        }}
-    >
-        <strong>
-            Due:
-        </strong>{" "}
-        {new Date(
-            book.dueDate
-        ).toLocaleDateString()}
-    </p>
+                            marginBottom: "10px"
+                        }}
+                    >
+                        <strong>
+                            Due:
+                        </strong>{" "}
+                        {new Date(
+                            book.dueDate
+                        ).toLocaleDateString()}
+                    </p>
 
-)}
+                )}
                 {showCopies && (
 
-        <p
-            style={{
-                color:
-                    book.availableCopies > 0
-                        ? colors.green
-                        : colors.danger,
+                    <p
+                        style={{
+                            color:
+                                book.availableCopies > 0
+                                    ? colors.green
+                                    : colors.danger,
 
-                fontWeight: "600",
+                            fontWeight: "600",
 
-                marginBottom:
-                    "10px"
-            }}
-        >
-            Available Copies:{" "}
-            {book.availableCopies}
-        </p>
+                            marginBottom:
+                                "10px"
+                        }}
+                    >
+                        Available Copies:{" "}
+                        {book.availableCopies}
+                    </p>
 
-    )}
+                )}
             </div>
 
             {showButton && (
@@ -173,7 +175,7 @@ const BookCard = ({
                 <PrimaryButton
                     text={buttonText}
 
-                    
+
 
                     onClick={() =>
                         onClick(book._id)
